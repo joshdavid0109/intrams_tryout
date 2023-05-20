@@ -8,12 +8,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CoachLogin extends Application {
+public class AdminLogin extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Image image = new Image("SLU_LOGO.jpg");
 
-        FXMLLoader fxmlLoader = new FXMLLoader(CoachLogin.class.getResource("/org/coachLoginInterface.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AdminLogin.class.getResource("/org/adminLoginInterface.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setTitle("Coach");
         primaryStage.getIcons().add(image);

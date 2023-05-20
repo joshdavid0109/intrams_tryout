@@ -8,17 +8,21 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CoachLogin extends Application {
+public class CoachRegistrationInfo extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Image image = new Image("SLU_LOGO.jpg");
 
-        FXMLLoader fxmlLoader = new FXMLLoader(CoachLogin.class.getResource("/org/coachLoginInterface.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(CoachRegistrationInfo.class.getResource("/org/coachRegisterInterfacePersonalDetails.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setTitle("Coach");
+        primaryStage.setTitle("Student");
         primaryStage.getIcons().add(image);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
