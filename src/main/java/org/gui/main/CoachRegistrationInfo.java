@@ -15,7 +15,7 @@ public class CoachRegistrationInfo extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(CoachRegistrationInfo.class.getResource("/org/coachRegisterInterfacePersonalDetails.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setTitle("Student");
+        primaryStage.setTitle("Coach");
         primaryStage.getIcons().add(image);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);

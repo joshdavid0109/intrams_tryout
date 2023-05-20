@@ -11,14 +11,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.gui.database.DataPB;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class AdminMainController implements Initializable {
+public class CoachMainController implements Initializable {
 
     @FXML
     private BorderPane borderPane;
@@ -53,11 +52,9 @@ public class AdminMainController implements Initializable {
     @FXML
     private Text assignText;
 
-    DataPB dataPB;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dataPB = new DataPB();
+
     }
 
     @FXML
@@ -103,8 +100,7 @@ public class AdminMainController implements Initializable {
         createButton.setStyle("-fx-background-color: #13202FFF");
         assignButton.setStyle("-fx-background-color: #13202FFF");
 
-        AdminShowSportsAndCoordinatorsController.coaches = DataPB.getCoaches();
-        loadPage("/org/adminShowSportsAndCoordinators.fxml");
+        loadPage("/org/coachShowTryOut.fxml");
     }
 
     @FXML
@@ -127,7 +123,7 @@ public class AdminMainController implements Initializable {
         showButton.setStyle("-fx-background-color: #13202FFF");
         assignButton.setStyle("-fx-background-color: #13202FFF");
 
-        loadPage("/org/adminCreateSports.fxml");
+        loadPage("/org/coachCreateSchedule.fxml");
     }
 
     @FXML
@@ -150,7 +146,7 @@ public class AdminMainController implements Initializable {
         showButton.setStyle("-fx-background-color: #13202FFF");
         createButton.setStyle("-fx-background-color: #13202FFF");
 
-        loadPage("/org/adminAssign.fxml");
+        loadPage("/org/coachShowListSched.fxml");
     }
 
     private void loadPage(String page) {
@@ -170,7 +166,7 @@ public class AdminMainController implements Initializable {
     public void logOut(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/org/adminLoginInterface.fxml"));
+        loader.setLocation(getClass().getResource("/org/coachLoginInterface.fxml"));
         Parent root = loader.load();
 
         Scene scene = new Scene(root);

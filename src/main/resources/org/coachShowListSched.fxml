@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.CoachShowListSchedController">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane layoutX="18.0" layoutY="103.0" prefHeight="3.0" prefWidth="450.0" style="-fx-background-color: AE8540FF;" />
+            <Text fill="#ae8540" layoutX="82.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIST OF SCHEDULES" textAlignment="CENTER" wrappingWidth="321.41180419921875">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Text>
+            <Text fill="#ffa514" layoutX="68.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIST OF SCHEDULES" textAlignment="CENTER" wrappingWidth="349.41180419921875">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Text>
+            <ScrollPane layoutX="19.0" layoutY="128.0" prefHeight="200.0" prefWidth="449.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="439.0" prefWidth="434.0">
+                     <children>
+                        <TreeTableView prefHeight="439.0" prefWidth="436.0">
+                          <columns>
+                            <TreeTableColumn editable="false" prefWidth="108.7999809384346" resizable="false" text="SCHEDULE CODE" />
+                            <TreeTableColumn editable="false" prefWidth="60.800048828125" resizable="false" sortable="false" text="DATE" />
+                              <TreeTableColumn editable="false" prefWidth="93.60000610351562" resizable="false" sortable="false" text="START TIME" />
+                              <TreeTableColumn editable="false" prefWidth="72.0" resizable="false" sortable="false" text="END TIME" />
+                              <TreeTableColumn editable="false" prefWidth="98.39999389648438" resizable="false" sortable="false" text="LOCATION" />
+                          </columns>
+                        </TreeTableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
