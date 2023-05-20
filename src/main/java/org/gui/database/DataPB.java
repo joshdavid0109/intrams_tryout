@@ -8,16 +8,14 @@ import java.util.ArrayList;
 
 public class DataPB {
     private static Connection connection;
-    private DataPB(){
-    }
-
-    public static void setConnection() {
+    public DataPB(){
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/im?user=root&password");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cbts?user=root&password");
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public static void showStatusOfStudent(int idNumber) throws SQLException {
         try {
@@ -43,6 +41,8 @@ public class DataPB {
             throw e;
         }
     }
+
+
 
     public static void getTryOutSchedule(int sportsCode, int depId) throws SQLException {
         try {
@@ -316,12 +316,13 @@ public class DataPB {
 
     public static ArrayList<Coach> getCoaches() throws Exception{
         ArrayList<Coach> coaches = new ArrayList<>();
-        String query = "SELECT * FROM coordinators";
+        String query = "SELECT concat(c.firstName, space(1), c.lastName), s.sportsName from coach n\n" +
+                "inner join coordinators c on n.coachNo = c.idcoordinators inner join sports s on n.sportsCode = s.sportsCode;";
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = statement.executeQuery(query);
 
         while (rs.next()) {
-            coaches.add(new Coach(Integer.parseInt(rs.getString(1)), rs.getString(2), Integer.parseInt(rs.getString(3))));
+            coaches.add(new Coach(rs.getString(1), rs.getString(2)));
         }
         rs.close();
         return coaches;

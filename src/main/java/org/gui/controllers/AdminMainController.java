@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.gui.database.DataPB;
 
 import java.io.IOException;
 import java.net.URL;
@@ -52,9 +53,11 @@ public class AdminMainController implements Initializable {
     @FXML
     private Text assignText;
 
+    DataPB dataPB;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        dataPB = new DataPB();
     }
 
     @FXML
@@ -81,7 +84,7 @@ public class AdminMainController implements Initializable {
     }
 
     @FXML
-    public void onPageOne(javafx.scene.input.MouseEvent mouseEvent) {
+    public void onPageOne(javafx.scene.input.MouseEvent mouseEvent) throws Exception {
         if (resultButton.isPressed()) {
             resultButton.setStyle("-fx-background-color: #FFFFFF");
         } else {
@@ -100,6 +103,7 @@ public class AdminMainController implements Initializable {
         scheduleButton.setStyle("-fx-background-color: #13202FFF");
         assignButton.setStyle("-fx-background-color: #13202FFF");
 
+        AdminShowSportsAndCoordinatorsController.coaches = DataPB.getCoaches();
         loadPage("/org/adminShowSportsAndCoordinators.fxml");
     }
 
