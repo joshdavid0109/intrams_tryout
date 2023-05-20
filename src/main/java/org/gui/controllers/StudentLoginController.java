@@ -21,7 +21,9 @@ import org.gui.main.StudentMain;
 
 import java.io.IOException;
 
+import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class StudentLoginController {
 
@@ -43,8 +45,9 @@ public class StudentLoginController {
     private AnchorPane loginAnchorPane;
     @FXML
     private StackPane parentContainer;
+    
 
-    public DataPB sql;
+
 
 
     @FXML
@@ -77,7 +80,6 @@ public class StudentLoginController {
 
 
     public void logInNa(ActionEvent actionEvent) throws Exception {
-        DataPB.setConnection();
 
         String studentIdText = logInStudentId.getText();
         if (studentIdText.isEmpty()) {

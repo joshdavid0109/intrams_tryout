@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.gui.database.DataPB;
 
 import java.io.IOException;
 import java.net.URL;
@@ -64,6 +63,7 @@ public class AdminMainController implements Initializable {
     public void homePage(javafx.scene.input.MouseEvent mouseEvent) {
         if (homeButton.isPressed()) {
             homeButton.setStyle("-fx-background-color: #FFFFFF");
+
         } else {
             homeButton.setStyle("-fx-background-color: #FFFFFF");
             showButton.setStyle("-fx-text-fill: #13202FFF");
@@ -84,7 +84,7 @@ public class AdminMainController implements Initializable {
     }
 
     @FXML
-    public void onPageOne(javafx.scene.input.MouseEvent mouseEvent) {
+    public void onPageOne(javafx.scene.input.MouseEvent mouseEvent) throws Exception {
         if (showButton.isPressed()) {
             showButton.setStyle("-fx-background-color: #FFFFFF");
         } else {
@@ -104,6 +104,7 @@ public class AdminMainController implements Initializable {
         assignButton.setStyle("-fx-background-color: #13202FFF");
 
         AdminShowSportsAndCoordinatorsController.coaches = DataPB.getCoaches();
+
         loadPage("/org/adminShowSportsAndCoordinators.fxml");
     }
 
