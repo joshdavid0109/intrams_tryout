@@ -9,8 +9,5 @@
         <module name="IM_Final_Project" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="IM_Final_Project" target="16" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package org.gui.controllers;
+package org.gui.database;
 
 import org.gui.objects.*;
 import org.gui.objects.Student;
@@ -9,39 +9,10 @@ import java.util.ArrayList;
 public class DataPB {
     private static Connection connection;
     public DataPB(){
-    }
-
-    public static void setConnection() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/im?user=root&password");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cbts?user=root&password");
         }catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public static boolean loginStudent(int studentId, String password) throws SQLException {
-        try {
-            String query = "select count(*) from registration_list where studentId = ? and password = ?";
-            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            statement.setInt(1, studentId);
-            statement.setString(2,password);
-            ResultSet rs = statement.executeQuery();
-
-            System.out.println(studentId +  password);
-
-            rs.next();
-            int count = rs.getInt(1);
-
-            System.out.println(count);
-
-            if (count > 0) {
-            return true;
-            }
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
@@ -70,6 +41,8 @@ public class DataPB {
             throw e;
         }
     }
+
+
 
     public static void getTryOutSchedule(int sportsCode, int depId) throws SQLException {
         try {
@@ -343,12 +316,13 @@ public class DataPB {
 
     public static ArrayList<Coach> getCoaches() throws Exception{
         ArrayList<Coach> coaches = new ArrayList<>();
-        String query = "SELECT * FROM coordinators";
+        String query = "SELECT concat(c.firstName, space(1), c.lastName), s.sportsName from coach n\n" +
+                "inner join coordinators c on n.coachNo = c.idcoordinators inner join sports s on n.sportsCode = s.sportsCode;";
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = statement.executeQuery(query);
 
         while (rs.next()) {
-            coaches.add(new Coach(Integer.parseInt(rs.getString(1)), rs.getString(2), Integer.parseInt(rs.getString(3))));
+            coaches.add(new Coach(rs.getString(1), rs.getString(2)));
         }
         rs.close();
         return coaches;
