@@ -73,7 +73,7 @@
    <center>
       <AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="485.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="88.0" fitWidth="70.0" layoutX="214.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="88.0" fitWidth="70.0" layoutX="398.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../SLU_LOGO_REMOVEBG.png" />
                </image>
@@ -95,6 +95,26 @@
             <Text layoutX="77.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Sir John Whitmore -" textAlignment="CENTER" wrappingWidth="330.9996337890625">
                <font>
                   <Font name="System Italic" size="9.0" />
+               </font>
+            </Text>
+            <Text layoutX="64.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COACH ID :">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Text>
+            <Text layoutX="29.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SPORTS CODE :">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Text>
+            <Text layoutX="184.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COACH ID">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Text>
+            <Text layoutX="184.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SPORTS CODE">
+               <font>
+                  <Font name="System Bold" size="19.0" />
                </font>
             </Text>
          </children>
