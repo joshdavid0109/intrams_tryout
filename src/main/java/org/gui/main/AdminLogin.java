@@ -15,7 +15,7 @@ public class AdminLogin extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(AdminLogin.class.getResource("/org/adminLoginInterface.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setTitle("Coach");
+        primaryStage.setTitle("Admin");
         primaryStage.getIcons().add(image);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);

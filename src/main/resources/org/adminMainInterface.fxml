@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #13202FFF;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.AdminMainController">
+   <left>
+      <Pane prefHeight="400.0" prefWidth="115.0" style="-fx-background-color: #13202FFF;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox layoutX="-3.0" layoutY="100.0" prefHeight="180.0" prefWidth="124.0">
+               <children>
+                  <Button fx:id="homeButton" mnemonicParsing="false" onMouseClicked="#homePage" prefHeight="34.0" prefWidth="126.0" style="-fx-background-color: white;" text="HOME" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="resultButton" mnemonicParsing="false" onMouseClicked="#onPageOne" prefHeight="30.0" prefWidth="122.0" style="-fx-background-color: #13202FFF;" text="SHOW" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="scheduleButton" mnemonicParsing="false" onMouseClicked="#onPageTwo" prefHeight="33.0" prefWidth="123.0" style="-fx-background-color: #13202FFF;" text="CREATE" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="assignButton" mnemonicParsing="false" onMouseClicked="#onPageThree" prefHeight="30.0" prefWidth="122.0" style="-fx-background-color: #13202FFF;" text="ASSIGN" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <Button fx:id="logOutButton" layoutX="23.0" layoutY="353.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: #AE8540FF;" text="LOG OUT" textFill="WHITE">
+               <effect>
+                  <DropShadow height="0.0" radius="0.0" width="0.0" />
+               </effect>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Text fx:id="homeText" fill="#13202f" layoutX="7.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOME" textAlignment="CENTER" wrappingWidth="102.93673324584961">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="resultText" fill="#13202f" layoutX="7.3" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SHOW" textAlignment="CENTER" visible="false" wrappingWidth="102.93673324584961">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="scheduleText" fill="#13202f" layoutX="7.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CREATE" textAlignment="CENTER" visible="false" wrappingWidth="102.93673324584961">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+            <Text fx:id="assignText" fill="#13202f" layoutX="7.0" layoutY="219.0" smooth="false" strokeType="OUTSIDE" strokeWidth="0.0" text="ASSIGN" textAlignment="CENTER" visible="false" wrappingWidth="102.93673324584961">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+   </left>
+   <center>
+      <AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="485.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="88.0" fitWidth="70.0" layoutX="214.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../SLU_LOGO_REMOVEBG.png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="29.0" layoutY="121.0" prefHeight="5.0" prefWidth="427.0" style="-fx-background-color: #AE8540FF;" />
+            <Text layoutX="102.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SAINT LOUIS UNIVERSITY">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Text>
+            <Text layoutX="77.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wanted to take a moment to remind you of the incredible potential that lies within you." textAlignment="CENTER" wrappingWidth="330.9996337890625" />
+            <Text layoutX="77.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You possess the power to achieve greatness, and this tryout is an opportunity for you to showcase your skills and passion." textAlignment="CENTER" wrappingWidth="330.9996337890625" />
+            <Text layoutX="77.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" 'What lies behind us and what lies before us are tiny matters compared to what lies within us.'" textAlignment="CENTER" wrappingWidth="330.9996337890625">
+               <font>
+                  <Font name="System Italic" size="9.0" />
+               </font>
+            </Text>
+            <Pane layoutX="29.0" layoutY="291.0" prefHeight="5.0" prefWidth="427.0" style="-fx-background-color: #AE8540FF;" />
+            <Text layoutX="77.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-Ralph Waldo Emerson-" textAlignment="CENTER" wrappingWidth="330.9996337890625">
+               <font>
+                  <Font name="System Italic" size="9.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
