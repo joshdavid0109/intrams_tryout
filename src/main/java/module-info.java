@@ -10,6 +10,7 @@ module com.example.im_final_project {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires javafx.graphics;
+    requires java.sql;
 
     opens org;
 
