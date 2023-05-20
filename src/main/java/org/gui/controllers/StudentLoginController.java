@@ -9,11 +9,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.gui.main.StudentMain;
 
 import java.io.IOException;
 
@@ -22,7 +26,7 @@ import java.util.Objects;
 public class StudentLoginController {
 
     @FXML
-    public TextField logInUsername;
+    public TextField logInStudentId;
     @FXML
     public TextField logInPassword;
     @FXML
@@ -39,6 +43,9 @@ public class StudentLoginController {
     private AnchorPane loginAnchorPane;
     @FXML
     private StackPane parentContainer;
+
+    public DataPB sql;
+
 
     @FXML
     public void LoadRegisterInformationGUI() throws IOException {
@@ -63,15 +70,57 @@ public class StudentLoginController {
             logInPassword.setText(logInPasswordHide.getText());
             logInPassword.toFront();
         } else {
-            logInPasswordHide.setText(logInPassword.getText());
+            logInPasswordHide.getText();
             logInPasswordHide.toFront();
         }
     }
 
 
     public void logInNa(ActionEvent actionEvent) throws Exception {
+        DataPB.setConnection();
 
+        String studentIdText = logInStudentId.getText();
+        if (studentIdText.isEmpty()) {
+            System.out.println("Student ID is required.");
+            return;
+        }
+
+        int studentId = Integer.parseInt(studentIdText);
+        String password = getPassword();
+
+        boolean isLoggedIn = DataPB.loginStudent(studentId, password);
+
+        if (isLoggedIn) {
+            System.out.println("Welcome boss");
+
+            Stage loginStage = (Stage) logInButton.getScene().getWindow();
+            loginStage.close();
+
+            Stage primaryStage = new Stage();
+            Image image = new Image("SLU_LOGO.jpg");
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/studentMainInterface.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Student");
+            primaryStage.getIcons().add(image);
+            primaryStage.setResizable(false);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } else {
+            System.out.println("wrong deets");
+        }
     }
+
+    private String getPassword() {
+        if (showPassword.isSelected()) {
+            return logInPassword.getText();
+        } else {
+            return logInPasswordHide.getText();
+        }
+    }
+
 }
 
 

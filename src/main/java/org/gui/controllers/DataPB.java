@@ -1,4 +1,4 @@
-package org.gui.database;
+package org.gui.controllers;
 
 import org.gui.objects.*;
 import org.gui.objects.Student;
@@ -8,16 +8,43 @@ import java.util.ArrayList;
 
 public class DataPB {
     private static Connection connection;
-    private DataPB(){
+    public DataPB(){
     }
 
     public static void setConnection() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/im?user=root&password");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/im?user=root&password");
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public static boolean loginStudent(int studentId, String password) throws SQLException {
+        try {
+            String query = "select count(*) from registration_list where studentId = ? and password = ?";
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, studentId);
+            statement.setString(2,password);
+            ResultSet rs = statement.executeQuery();
+
+            System.out.println(studentId +  password);
+
+            rs.next();
+            int count = rs.getInt(1);
+
+            System.out.println(count);
+
+            if (count > 0) {
+            return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     public static void showStatusOfStudent(int idNumber) throws SQLException {
         try {
