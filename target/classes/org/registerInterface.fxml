@@ -21,7 +21,7 @@
             <Pane layoutX="233.0" prefHeight="450.0" prefWidth="370.0" style="-fx-background-color: WHITE;">
                <children>
                   <Button fx:id="loadLoginGUIbtn" layoutX="262.0" layoutY="395.0" mnemonicParsing="false" onAction="#loadLoginGUI" style="-fx-background-color: white;" text="SIGN IN" underline="true" />
-                  <TextField fx:id="regUsername" layoutX="92.0" layoutY="77.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter Username" style="-fx-background-radius: 15;" />
+                  <TextField fx:id="regStudentId" layoutX="92.0" layoutY="77.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter Username" style="-fx-background-radius: 15;" />
                   <TextField fx:id="regVerifyPassword" layoutX="91.0" layoutY="266.0" prefHeight="25.0" prefWidth="200.0" promptText="Enter Password" style="-fx-background-radius: 15;" />
                   <Text layoutX="91.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
                      <font>

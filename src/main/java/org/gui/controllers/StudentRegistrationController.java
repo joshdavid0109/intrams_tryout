@@ -4,6 +4,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,10 +13,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import org.gui.objects.Department;
+import org.gui.objects.RegisteredUser;
+import org.gui.objects.Sport;
+import org.gui.objects.Student;
 
 import java.io.IOException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -43,7 +49,10 @@ public class StudentRegistrationController {
     @FXML
     private TextField regVerifyPassword;
     @FXML
-    private TextField regUsername;
+    private TextField regStudentId;
+
+    private int sportsCode;
+
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -84,8 +93,70 @@ public class StudentRegistrationController {
         timeline.play();
     }
 
-    public void registerNa() throws IOException {
+    public void registerNa(ActionEvent e) throws Exception {
 
+        ArrayList<Sport> sports = DataPB.getAvailableSports();
+        ArrayList<Department> departments = DataPB.getDepartments();
+        ArrayList<RegisteredUser> registeredUsers = DataPB.getRegisteredStudents();
+        System.out.println(sportsCode);
+
+        String studIdText = regStudentId.getText();
+        String password = regPassword.getText();
+        String verifyPassword = regVerifyPassword.getText();
+
+        if (password != verifyPassword) {
+            showAlert("Error", "Password does not match.");
+        }
+
+        if (studIdText.isEmpty() || password.isEmpty()) {
+            showAlert("Error", "Student ID and password cannot be empty.");
+            return;
+        }
+
+        int studId;
+
+        try {
+            studId = Integer.parseInt(studIdText);
+        } catch (Exception x) {
+            showAlert("Error", "Student ID must be a numeric value.");
+            return;
+        }
+
+        if (studId < 100000 || studId > 999999) {
+            showAlert("Error", "Student ID must have 6 digits.");
+            return;
+        }
+
+        boolean checkExist = DataPB.checkExistingStudentId(studId);
+
+        if (password.length() < 8) {
+            showAlert("Error", "Password must have at least 8 characters.");
+        }
+
+        if (!checkExist) {
+            showAlert("Error", "Student with the provided ID number does not exist.");
+            return;
+        }
+
+        boolean checkIfRegistered = DataPB.checkExistingStudentIdSaRegistrationsHAHAHA(studId);
+
+        if (checkIfRegistered) {
+            showAlert("Error", "Student with the provided ID number is already registered :(");
+            return;
+        }
+
+//        int deptId = DataPB.getDeptId(studId);
+
+        DataPB.addStudent(new org.gui.objects.RegisteredUser(registeredUsers.size() + 1, studId, sportsCode,
+                "wala pa", password));
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -112,5 +183,8 @@ public class StudentRegistrationController {
             regVerifyPasswordHide.setVisible(true);
             regVerifyPassword.setVisible(false);
         }
+    }
+    public void setSelectedSportCode(int sportsCode) {
+        this.sportsCode = sportsCode;
     }
 }

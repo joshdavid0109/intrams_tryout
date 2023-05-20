@@ -18,7 +18,6 @@ public class DataPB {
     }
 
     public static boolean loginStudent(int studentId, String password) {
-
         try {
             String query = "select count(*) FROM registration_list where studentId = ? and password = ?";
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
@@ -41,8 +40,80 @@ public class DataPB {
         }
     }
 
+    public static boolean checkExistingStudentId(int studentId) {
+        try { String query = "select studentId FROM students WHERE studentId = ?";
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, studentId);
+            ResultSet rs = statement.executeQuery();
 
-    public static void showStatusOfStudent(int idNumber) throws SQLException {
+            boolean exists = rs.next();
+
+            return exists;
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean checkExistingStudentIdSaRegistrationsHAHAHA(int studentId) {
+        try { String query = "select studentId FROM registration_list WHERE studentId = ?";
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, studentId);
+            ResultSet rs = statement.executeQuery();
+
+            boolean exists = rs.next();
+            return exists;
+
+        } catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static void addStudent(RegisteredUser registeredUsers) {
+        String query = "INSERT INTO registration_list VALUES(?,?,?,?,?)";
+        String selectQ= "SELECT * FROM registration_list";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(selectQ);
+            rs.next();
+            PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            int id = rs.getInt(1);
+            while (rs.next()) {
+                id = rs.getInt(1);
+            }
+            ps.setInt(1, id + 1);
+            ps.setInt(2, registeredUsers.getStudentId());
+            ps.setInt(3, registeredUsers.getAppliedSport());
+            ps.setString(4,registeredUsers.getContactNumber());
+            ps.setString(5, registeredUsers.getPassword());
+            ps.execute();
+
+            System.out.println("Registration Success!\n");
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public static void addStudentToDB(Student student) throws SQLException {
+        String query = "INSERT INTO students VALUES(?,?,?,?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            ps.setInt(1, student.getStudentID());
+            ps.setString(2, student.getFirstName());
+            ps.setString(3, student.getLastName());
+            ps.setInt(4, student.getDeptID());
+            ps.execute();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+
+
+    public static void showStatusOfStudent(int studentId) throws SQLException {
         try {
             String query = "select tryout_sched_details.scheduleCode, tryout_sched_details.status\n" +
                     "from tryout_sched_details\n" +
@@ -50,7 +121,7 @@ public class DataPB {
                     "        using (registrationId)\n" +
                     "where registration_list.studentId =?";
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            statement.setInt(1, idNumber);
+            statement.setInt(1, studentId);
             ResultSet rs = statement.executeQuery();
 
             if (!rs.next()) {
@@ -65,6 +136,30 @@ public class DataPB {
         }catch (Exception e) {
             throw e;
         }
+    }
+
+    public static int getDeptId(int studentId) throws SQLException {
+        int deptId = 0;
+        try {
+            String query = "select deptId from students where studentId = ?";
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, studentId);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                deptId = rs.getInt("deptID");
+            } else {
+                System.err.println("No student found with the provided ID number.");
+            }
+
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            throw e;
+        }
+
+        return deptId;
     }
 
 
@@ -117,33 +212,6 @@ public class DataPB {
         return sports;
     }
 
-    public static void addStudent(RegisteredUser registeredUsers) {
-        String query = "INSERT INTO registration_list VALUES(?,?,?,?,?,?,?)";
-        String selectQ= "SELECT * FROM registration_list";
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(selectQ);
-            rs.next();
-            PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            int id = rs.getInt(1);
-            while (rs.next()) {
-                id = rs.getInt(1);
-            }
-            ps.setInt(1, id+1);
-            ps.setInt(2, registeredUsers.getStudentId());
-            ps.setInt(3, registeredUsers.getDepartment());
-            ps.setInt(4, registeredUsers.getAppliedSport());
-            ps.setString(5, registeredUsers.getSchedCode());
-            ps.setString(6,registeredUsers.getContactNumber());
-            ps.setString(7, registeredUsers.getPassword());
-            ps.execute();
-
-            System.out.println("Registration Success!\n");
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
 
 
     public static void addSchedule(TryoutSchedule tryoutSchedule) {
@@ -174,8 +242,7 @@ public class DataPB {
         while (resultSet.next()) {
 
             registeredUsers.add(new RegisteredUser(resultSet.getInt(1), resultSet.getInt(2),resultSet.getInt(3),
-                    resultSet.getInt(4), resultSet.getString(5), resultSet.getString(6)
-                    ,resultSet.getString(7)));
+                    resultSet.getString(4), resultSet.getString(5)));
         }
         resultSet.close();
         return registeredUsers;
@@ -283,9 +350,8 @@ public class DataPB {
         ResultSet resultSet = statement.executeQuery(query);
 
         while (resultSet.next()) {
-            registeredUsers.add(new RegisteredUser(resultSet.getInt(1),resultSet.getInt(2),
-                    resultSet.getInt(3), resultSet.getInt(4), resultSet.getString(5),
-                    resultSet.getString(6), resultSet.getString(7)));
+            registeredUsers.add(new RegisteredUser(resultSet.getInt(1), resultSet.getInt(2),resultSet.getInt(3),
+                    resultSet.getString(4), resultSet.getString(5)));
         }
         resultSet.close();
     }
@@ -303,20 +369,7 @@ public class DataPB {
 
     }
 
-    public static void addStudentToDB(Student student) throws SQLException {
-        String query = "INSERT INTO students VALUES(?,?,?,?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            ps.setInt(1, student.getStudentID());
-            ps.setString(2, student.getFirstName());
-            ps.setString(3, student.getLastName());
-            ps.setInt(4, student.getDeptID());
-            ps.execute();
-        } catch (SQLException e) {
-            throw e;
-        }
-    }
 
     public static Coordinator getCoordinator(int coordId) throws SQLException {
         try {
@@ -381,4 +434,6 @@ public class DataPB {
             throw e;
         }
     }
+
+
 }
