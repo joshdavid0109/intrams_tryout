@@ -8,14 +8,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class StudentLogin extends Application {
+public class CoachLogin extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Image image = new Image("SLU_LOGO.jpg");
 
-        FXMLLoader fxmlLoader = new FXMLLoader(AdminMain.class.getResource("/org/loginInterface.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(CoachLogin.class.getResource("/org/loginInterface.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setTitle("Student");
+        primaryStage.setTitle("Coach");
         primaryStage.getIcons().add(image);
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
