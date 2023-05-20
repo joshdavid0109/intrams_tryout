@@ -84,15 +84,15 @@
                   <Font name="System Bold" size="23.0" />
                </font>
             </Text>
-            <Text layoutX="77.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wanted to take a moment to remind you of the incredible potential that lies within you." textAlignment="CENTER" wrappingWidth="330.9996337890625" />
-            <Text layoutX="77.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You possess the power to achieve greatness, and this tryout is an opportunity for you to showcase your skills and passion." textAlignment="CENTER" wrappingWidth="330.9996337890625" />
-            <Text layoutX="77.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" 'What lies behind us and what lies before us are tiny matters compared to what lies within us.'" textAlignment="CENTER" wrappingWidth="330.9996337890625">
+            <Text layoutX="77.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You are an integral part of our team, contributing to the overall success of our collective endeavors. " textAlignment="CENTER" wrappingWidth="330.9996337890625" />
+            <Text layoutX="77.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your expertise in managing tasks, coordinating schedules, and maintaining impeccable organization will be the cornerstone of our success." textAlignment="CENTER" wrappingWidth="330.9996337890625" />
+            <Text layoutX="77.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&quot;Administrators are the architects of efficiency, the champions of organization, and the guardians of seamless operations.&quot;" textAlignment="CENTER" wrappingWidth="330.9996337890625">
                <font>
                   <Font name="System Italic" size="9.0" />
                </font>
             </Text>
             <Pane layoutX="29.0" layoutY="291.0" prefHeight="5.0" prefWidth="427.0" style="-fx-background-color: #AE8540FF;" />
-            <Text layoutX="77.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-Ralph Waldo Emerson-" textAlignment="CENTER" wrappingWidth="330.9996337890625">
+            <Text layoutX="77.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="330.9996337890625">
                <font>
                   <Font name="System Italic" size="9.0" />
                </font>

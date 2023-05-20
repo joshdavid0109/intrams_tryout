@@ -26,9 +26,9 @@
                         <TreeTableView prefHeight="472.0" prefWidth="438.0">
                           <columns>
                             <TreeTableColumn editable="false" prefWidth="113.6000297665596" resizable="false" sortable="false" text="SHCEDULE CODE" />
-                            <TreeTableColumn editable="false" prefWidth="105.5999755859375" sortable="false" text="DATE" />
-                              <TreeTableColumn editable="false" prefWidth="104.80007934570312" sortable="false" text="TIME" />
-                              <TreeTableColumn editable="false" prefWidth="117.5999755859375" sortable="false" text="LOCATION" />
+                            <TreeTableColumn editable="false" prefWidth="105.5999755859375" resizable="false" sortable="false" text="DATE" />
+                              <TreeTableColumn editable="false" prefWidth="104.80007934570312" resizable="false" sortable="false" text="TIME" />
+                              <TreeTableColumn editable="false" prefWidth="117.5999755859375" resizable="false" sortable="false" text="LOCATION" />
                           </columns>
                         </TreeTableView>
                      </children>

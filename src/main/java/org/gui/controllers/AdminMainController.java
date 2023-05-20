@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -98,7 +100,7 @@ public class AdminMainController implements Initializable {
         scheduleButton.setStyle("-fx-background-color: #13202FFF");
         assignButton.setStyle("-fx-background-color: #13202FFF");
 
-        loadPage("/org/studentResult.fxml");
+        loadPage("/org/adminShowSportsAndCoordinators.fxml");
     }
 
     @FXML
@@ -121,7 +123,7 @@ public class AdminMainController implements Initializable {
         resultButton.setStyle("-fx-background-color: #13202FFF");
         assignButton.setStyle("-fx-background-color: #13202FFF");
 
-        loadPage("/org/studentSchedule.fxml");
+        loadPage("/org/adminCreateSports.fxml");
     }
 
     @FXML
@@ -144,7 +146,7 @@ public class AdminMainController implements Initializable {
         resultButton.setStyle("-fx-background-color: #13202FFF");
         scheduleButton.setStyle("-fx-background-color: #13202FFF");
 
-        loadPage("/org/studentSchedule.fxml");
+        loadPage("/org/adminAssign.fxml");
     }
 
     private void loadPage(String page) {
@@ -161,6 +163,15 @@ public class AdminMainController implements Initializable {
     }
 
     @FXML
-    public void logOut(ActionEvent event) {
+    public void logOut(ActionEvent event) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/org/adminLoginInterface.fxml"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) logOutButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 }

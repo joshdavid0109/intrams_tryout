@@ -9,16 +9,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class AdminLoginController {
@@ -55,7 +55,36 @@ public class AdminLoginController {
 
 
     public void logInNa(ActionEvent actionEvent) throws Exception {
+        try {
+            String userName = logInUsername.getText();
+            String passWord = (logInPasswordHide.getText().equals("")
+                    ? logInPassword.getText() : logInPasswordHide.getText());
 
+            Alert message = new Alert(Alert.AlertType.INFORMATION);
+            if (userName.equals("user") && passWord.equals("admin")) {
+                logInButton.getScene().getWindow().hide();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/adminMainInterface.fxml"));
+
+
+                Parent root = fxmlLoader.load();
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) logInButton.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+
+
+            } else {
+                message.setContentText("Invalid Login Details.");
+                message.setTitle("Unsuccessful Login");
+                message.show();
+            }
+
+            logInPasswordHide.setText("");
+            logInPassword.setText("");
+            logInUsername.setText("");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
 

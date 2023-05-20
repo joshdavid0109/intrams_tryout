@@ -9,47 +9,35 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.StudentResultController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.AdminShowSportsAndCoordinatorsController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutX="18.0" layoutY="103.0" prefHeight="6.0" prefWidth="450.0" style="-fx-background-color: AE8540FF;" />
-            <Text layoutX="18.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTRATION ID : " textAlignment="RIGHT">
+            <AnchorPane layoutX="18.0" layoutY="103.0" prefHeight="3.0" prefWidth="450.0" style="-fx-background-color: AE8540FF;" />
+            <Text fill="#ae8540" layoutX="88.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ASSIGNED COACH TO SPORT" textAlignment="CENTER" wrappingWidth="321.41180419921875">
                <font>
-                  <Font name="System Bold" size="17.0" />
+                  <Font name="System Bold" size="30.0" />
                </font>
             </Text>
-            <ScrollPane layoutX="18.0" layoutY="119.0" prefHeight="260.0" prefWidth="450.0">
+            <Text fill="#ffa514" layoutX="74.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ASSIGNED COACH TO SPORT" textAlignment="CENTER" wrappingWidth="349.41180419921875">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Text>
+            <ScrollPane layoutX="64.0" layoutY="128.0" prefHeight="200.0" prefWidth="369.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="266.0" prefWidth="434.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="354.0">
                      <children>
-                        <TreeTableView prefHeight="472.0" prefWidth="438.0">
+                        <TreeTableView prefHeight="439.0" prefWidth="367.0">
                           <columns>
-                            <TreeTableColumn editable="false" prefWidth="113.6000297665596" resizable="false" sortable="false" text="SHCEDULE CODE" />
-                            <TreeTableColumn editable="false" prefWidth="105.5999755859375" sortable="false" text="DATE" />
-                              <TreeTableColumn editable="false" prefWidth="104.80007934570312" sortable="false" text="TIME" />
-                              <TreeTableColumn editable="false" prefWidth="117.5999755859375" sortable="false" text="LOCATION" />
+                            <TreeTableColumn editable="false" prefWidth="187.20000916719437" resizable="false" text="COACH" />
+                            <TreeTableColumn editable="false" prefWidth="166.39999389648438" resizable="false" sortable="false" text="SPORTS CODE" />
                           </columns>
                         </TreeTableView>
                      </children>
                   </AnchorPane>
               </content>
             </ScrollPane>
-            <Text layoutX="22.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STATUS :" textAlignment="RIGHT" wrappingWidth="150.1239013671875">
-               <font>
-                  <Font name="System Bold" size="17.0" />
-               </font>
-            </Text>
-            <Text layoutX="191.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTRATION ID" wrappingWidth="276.1603546142578">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
-            <Text layoutX="191.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="STATUS" wrappingWidth="276.1603546142578">
-               <font>
-                  <Font size="17.0" />
-               </font>
-            </Text>
          </children>
       </Pane>
    </center>
