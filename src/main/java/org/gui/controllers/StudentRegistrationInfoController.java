@@ -97,4 +97,6 @@ public class StudentRegistrationInfoController {
     }
 
 
+    public void clicky(MouseEvent mouseEvent) {
+    }
 }

@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -16,12 +17,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CoachMainController implements Initializable {
 
+    public Text coachID;
+    public Text sportsCode;
     @FXML
     private BorderPane borderPane;
 
@@ -55,9 +59,16 @@ public class CoachMainController implements Initializable {
     @FXML
     private Text assignText;
 
+    public static int coachNo;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        coachID.setText(String.valueOf(coachNo));
+        try {
+            sportsCode.setText(String.valueOf(DataPB.getCoachSportsCode(coachNo)));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -84,7 +95,7 @@ public class CoachMainController implements Initializable {
     }
 
     @FXML
-    public void onPageOne(javafx.scene.input.MouseEvent mouseEvent) {
+    public void onPageOne(javafx.scene.input.MouseEvent mouseEvent) throws Exception {
         if (showButton.isPressed()) {
             showButton.setStyle("-fx-background-color: #FFFFFF");
         } else {
@@ -103,6 +114,8 @@ public class CoachMainController implements Initializable {
         createButton.setStyle("-fx-background-color: #13202FFF");
         assignButton.setStyle("-fx-background-color: #13202FFF");
 
+        CoachShowTryOutController.scheduleList = DataPB.getTryOutSchedDetails(coachNo);
+        CoachShowTryOutController.coachNo =coachNo;
         loadPage("/org/coachShowTryOut.fxml");
     }
 
@@ -149,6 +162,7 @@ public class CoachMainController implements Initializable {
         showButton.setStyle("-fx-background-color: #13202FFF");
         createButton.setStyle("-fx-background-color: #13202FFF");
 
+//        CoachShowListSchedController.scheduleList = DataPB.get
         loadPage("/org/coachShowListSched.fxml");
     }
 
