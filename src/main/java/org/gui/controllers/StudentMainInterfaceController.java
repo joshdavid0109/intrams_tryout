@@ -1,5 +1,6 @@
 package org.gui.controllers;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,12 +17,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class StudentMainInterfaceController implements Initializable {
 
+    public Text regID;
     @FXML
     private BorderPane borderPane;
 
@@ -47,12 +50,21 @@ public class StudentMainInterfaceController implements Initializable {
     private Text resultText;
 
     @FXML
+    private Text statusText;
+
+    @FXML
     private Text scheduleText;
+
+    public static int studId;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+
+
 
     @FXML
     public void homePage(javafx.scene.input.MouseEvent mouseEvent) {
@@ -88,6 +100,9 @@ public class StudentMainInterfaceController implements Initializable {
         scheduleText.setVisible(false);
         homeButton.setStyle("-fx-background-color: #13202FFF");
         scheduleButton.setStyle("-fx-background-color: #13202FFF");
+        StudentResultController.studentID = studId;
+        StudentResultController.status = "";
+        System.out.println(StudentResultController.studentID + "idto");
         loadPage("/org/studentResult.fxml");
     }
 
@@ -107,11 +122,11 @@ public class StudentMainInterfaceController implements Initializable {
         homeButton.setStyle("-fx-background-color: #13202FFF");
         resultButton.setStyle("-fx-background-color: #13202FFF");
         loadPage("/org/studentSchedule.fxml");
+
     }
 
     private void loadPage(String page) {
         Parent root = null;
-
 
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(page)));
@@ -144,4 +159,9 @@ public class StudentMainInterfaceController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+
+
+
+
 }

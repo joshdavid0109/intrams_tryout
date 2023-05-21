@@ -1,5 +1,7 @@
 package org.gui.controllers;
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
 import org.gui.objects.*;
 import org.gui.objects.Student;
 
@@ -156,6 +158,29 @@ public class DataPB {
         }
     }
 
+    public static int showRegistrationId(int studentId) throws SQLException {
+        int registrationId = -1;
+
+        try {
+            String query = "SELECT registrationId FROM registration_list INNER JOIN students\n" +
+                    "ON registration_list.studentID = students.studentID\n" +
+                    "WHERE students.studentID = ?";
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, studentId);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                registrationId = rs.getInt("registrationId");
+                System.out.println(registrationId);
+            }
+        } catch (SQLException e) {
+            // Handle the exception appropriately
+            e.printStackTrace();
+        }
+
+        return registrationId;
+    }
+
 
 
     public static void showStatusOfStudent(int studentId) throws SQLException {
@@ -247,19 +272,36 @@ public class DataPB {
 
         return deptId;
     }
-
-
-
-    public static void getTryOutSchedule(int sportsCode, int depId) throws SQLException {
+    public static int getSportsCodeOfUser(int studentId) throws SQLException {
         try {
-            String query = "select tryout_schedule.scheduleCode, tryout_schedule.date, tryout_schedule.start_time, " +
+            String query = "SELECT appliedSport FROM registration_list WHERE studentId = ?";
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, studentId);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                String sportsCode = rs.getString("appliedSport");
+                System.out.println("Sports Code: " + sportsCode + "of " + studentId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return studentId;
+    }
+
+    public static ArrayList<TryoutSchedule> getTryOutSchedule(int sportsCode, int depId) throws SQLException {
+        ArrayList<TryoutSchedule> schedules = new ArrayList<>();
+
+        try {
+            String query = "SELECT tryout_schedule.scheduleCode, tryout_schedule.date, tryout_schedule.start_time, " +
                     "tryout_schedule.end_time, tryout_schedule.location\n" +
-                    "from tryout_schedule\n" +
-                    "    inner join coach c\n" +
-                    "    using (sportsCode)\n" +
-                    "    inner join coordinators c2\n" +
-                    "    on c.coachNo = c2.idcoordinators\n" +
-                    "where sportsCode=? AND deptID=?";
+                    "FROM tryout_schedule\n" +
+                    "    INNER JOIN coach c\n" +
+                    "    USING (sportsCode)\n" +
+                    "    INNER JOIN coordinators c2\n" +
+                    "    ON c.coachNo = c2.idcoordinators\n" +
+                    "WHERE sportsCode=? AND deptID=?";
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, sportsCode);
             statement.setInt(2, depId);
@@ -268,20 +310,28 @@ public class DataPB {
             if (!rs.next()) {
                 System.err.println("No available schedule yet for your department and applied sport.");
             } else {
-                System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", "Schedule Code", "Date (YYYY-mm-dd)", "Start Time", "End Time",
-                        "Location");
-                System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", "-------------", "-----------------", "----------", "--------",
-                        "--------");
                 do {
-                    System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", rs.getString(1), rs.getString(2), rs.getString(3),
-                            rs.getString(4), rs.getString(5));
+                    String scheduleCode = rs.getString("scheduleCode");
+                    Date date = rs.getDate("date");
+                    Time startTime = rs.getTime("start_time");
+                    Time endTime = rs.getTime("end_time");
+                    String location = rs.getString("location");
+
+                    TryoutSchedule schedule = new TryoutSchedule(scheduleCode, date, startTime, endTime, location);
+                    schedules.add(schedule);
                 } while (rs.next());
             }
+
             rs.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw e;
         }
+
+        return schedules;
     }
+
+
+
 
     public static ArrayList<Sport> getAvailableSports() throws Exception{
         ArrayList<Sport> sports = new ArrayList<>();
@@ -302,7 +352,7 @@ public class DataPB {
 
     public static void addSchedule(TryoutSchedule tryoutSchedule) {
         String getMaxScheduleCodeQuery = "SELECT MAX(CAST(scheduleCode AS UNSIGNED)) AS maxCode FROM tryout_schedule";
-        String insertScheduleQuery = "INSERT INTO tryout_schedule(scheduleCode, sportsCode, deptTryoutCode, date, start_time, end_time, location) VALUES(?,?,?,?,?,?,?)";
+        String insertScheduleQuery = "INSERT INTO tryout_schedule(scheduleCode, sportsCode, coachNo, date, start_time, end_time, location) VALUES(?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement getMaxCodeStatement = connection.prepareStatement(getMaxScheduleCodeQuery);
@@ -423,7 +473,7 @@ public class DataPB {
     public static ArrayList<TryoutSchedule> getTryouts(int sportsCode, int deptId) throws SQLException {
         ArrayList<TryoutSchedule> tryoutSchedules = new ArrayList<>();
         try {
-            String query = "select tryout_schedule.scheduleCode,tryout_schedule.sportsCode, tryout_schedule.deptTryoutCode," +
+            String query = "select tryout_schedule.scheduleCode,tryout_schedule.sportsCode, tryout_schedule.coachNo," +
                     " tryout_schedule.date, tryout_schedule.start_time, " +
                     "tryout_schedule.end_time, tryout_schedule.location, tryout_schedule.totalstudents\n" +
                     "from tryout_schedule\n" +
@@ -569,7 +619,7 @@ public class DataPB {
             String query = "select tryout_schedule.scheduleCode, tryout_schedule.date, tryout_schedule.start_time,\n" +
                     "       tryout_schedule.end_time, tryout_schedule.location\n" +
                     "from tryout_schedule\n" +
-                    "       where tryout_schedule.deptTryoutCode=?";
+                    "       where tryout_schedule.coachNo=?";
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, coordId);
             ResultSet rs = statement.executeQuery();

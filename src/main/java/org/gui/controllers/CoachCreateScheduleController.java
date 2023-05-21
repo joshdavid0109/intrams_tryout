@@ -34,7 +34,7 @@ public class CoachCreateScheduleController implements Initializable {
     @FXML
     private Button saveBtn;
 
-    public int coachNo;//TODO REMOVE VARIABLE
+    public int coachNo;
 
     public int sportsCode;
 
@@ -75,8 +75,6 @@ public class CoachCreateScheduleController implements Initializable {
         datePicker.setValue(null);
         LocationChoiceBox.setValue(null);
     }
-
-
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
