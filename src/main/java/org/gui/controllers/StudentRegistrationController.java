@@ -4,18 +4,28 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.gui.objects.Department;
+import org.gui.objects.RegisteredUser;
+import org.gui.objects.Sport;
+import org.gui.objects.Student;
 
 import java.io.IOException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -32,19 +42,22 @@ public class StudentRegistrationController {
 
     @FXML
     private PasswordField regPasswordHide;
-    @FXML
-    private PasswordField regVerifyPasswordHide;
+
     @FXML
     private CheckBox regShowPassword;
-    @FXML
-    private CheckBox regVerifyShowPassword;
+
     @FXML
     private TextField regPassword;
-    @FXML
-    private TextField regVerifyPassword;
-    @FXML
-    private TextField regUsername;
 
+    @FXML
+    private TextField contactNumberField;
+    @FXML
+    private TextField regStudentId;
+
+    @FXML
+    private ComboBox<String> sportComboBox;
+
+    private int sportsCode;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -84,8 +97,104 @@ public class StudentRegistrationController {
         timeline.play();
     }
 
-    public void registerNa() throws IOException {
+    public void registerNa(ActionEvent e) throws Exception {
 
+      /*  ArrayList<Sport> sports = DataPB.getAvailableSports();
+        ArrayList<Department> departments = DataPB.getDepartments();*/
+        ArrayList<RegisteredUser> registeredUsers = DataPB.getRegisteredStudents();
+        System.out.println(sportsCode);
+
+        String studIdText = regStudentId.getText();
+        String password = regPassword.getText();
+        String contactNo = contactNumberField.getText();
+        String selectedSport = sportComboBox.getValue(); // Get the selected option from the ComboBox
+
+
+        if (selectedSport == null || selectedSport.isEmpty()) {
+            showAlert("Error", "Please select a sport!");
+            return;
+        }
+
+        switch (selectedSport) {
+            case "Basketball":
+                sportsCode = 1;
+                break;
+            case "Hockey":
+                sportsCode = 2;
+                break;
+            case "Association Football":
+                sportsCode = 3;
+                break;
+            default:
+                sportsCode = 0;
+                break;
+        }
+
+
+        if (studIdText.isEmpty() || password.isEmpty()) {
+            showAlert("Error", "Student ID and password cannot be empty.");
+            return;
+        }
+
+        int studId;
+
+        try {
+            studId = Integer.parseInt(studIdText);
+        } catch (Exception x) {
+            showAlert("Error", "Student ID must be a numeric value.");
+            return;
+        }
+
+        if(contactNo.isEmpty()) {
+            showAlert("Error", "Contact No. cannot be empty.");
+            return;
+        }
+
+        if (studId < 100000 || studId > 999999) {
+            showAlert("Error", "Student ID must have 6 digits.");
+            return;
+        }
+
+        boolean checkExist = DataPB.checkExistingStudentId(studId);
+
+        if (password.length() < 8) {
+            showAlert("Error", "Password must have at least 8 characters.");
+        }
+
+        if (!checkExist) {
+            showAlert("Error", "Student with the provided ID number does not exist.");
+            return;
+        }
+
+        boolean checkIfRegistered = DataPB.checkExistingStudentIdSaRegistrationsHAHAHA(studId);
+
+        if (checkIfRegistered) {
+            showAlert("Error", "Student with the provided ID number is already registered :(");
+            return;
+        }
+
+//        int deptId = DataPB.getDeptId(studId);
+
+        System.out.println("helu");
+        DataPB.addStudent(new org.gui.objects.RegisteredUser(registeredUsers.size() + 1, studId, sportsCode,
+                contactNo, password));
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/org/studentMainInterface.fxml"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) regButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -101,16 +210,9 @@ public class StudentRegistrationController {
         }
     }
 
-    @FXML
-    public void regVerifyShowPassword() {
-        if(regVerifyShowPassword.isSelected()) {
-            regVerifyPassword.setText(regVerifyPasswordHide.getText());
-            regVerifyPassword.setVisible(true);
-            regVerifyPasswordHide.setVisible(false);
-        } else {
-            regVerifyPasswordHide.setText(regVerifyPassword.getText());
-            regVerifyPasswordHide.setVisible(true);
-            regVerifyPassword.setVisible(false);
-        }
+    public void clicky(MouseEvent mouseEvent) {
+        ObservableList<String> list = FXCollections.observableArrayList("Basketball", "Hockey", "Association Football");
+        sportComboBox.getItems().setAll(list);
+        sportComboBox.getSelectionModel().selectFirst();
     }
 }

@@ -9,20 +9,26 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.gui.main.StudentMain;
 
 import java.io.IOException;
 
+import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class StudentLoginController {
 
     @FXML
-    public TextField logInUsername;
+    public TextField logInStudentId;
     @FXML
     public TextField logInPassword;
     @FXML
@@ -42,7 +48,7 @@ public class StudentLoginController {
 
     @FXML
     public void LoadRegisterInformationGUI() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/registerInterfacePersonalDetails.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/registerInterface.fxml")));
         Scene scene = loadRegisterGUIbtn.getScene();
 
         root.translateXProperty().set(scene.getWidth());
@@ -63,15 +69,71 @@ public class StudentLoginController {
             logInPassword.setText(logInPasswordHide.getText());
             logInPassword.toFront();
         } else {
-            logInPasswordHide.setText(logInPassword.getText());
+            logInPasswordHide.getText();
             logInPasswordHide.toFront();
         }
     }
 
 
     public void logInNa(ActionEvent actionEvent) throws Exception {
+        Alert message = new Alert(Alert.AlertType.INFORMATION);
 
+        String studentIdText = logInStudentId.getText();
+
+        if (studentIdText.isEmpty()) {
+            message.setContentText("Invalid Student Id or Password");
+            message.setTitle("Unsuccessful Login");
+            message.show();
+
+            System.out.println("Login Unsuccessful");
+            logInPasswordHide.setText("");
+            logInPassword.setText("");
+            logInStudentId.setText("");
+            return;
+        }
+
+        int studentId = Integer.parseInt(studentIdText);
+        String password = getPassword();
+
+        boolean isLoggedIn = DataPB.loginStudent(studentId, password);
+
+        if (isLoggedIn) {
+            System.out.println("Welcome Student");
+
+            Stage loginStage = (Stage) logInButton.getScene().getWindow();
+            loginStage.close();
+
+            Stage primaryStage = new Stage();
+            Image image = new Image("SLU_LOGO.jpg");
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/studentMainInterface.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Student");
+            primaryStage.getIcons().add(image);
+            primaryStage.setResizable(false);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } else {
+            message.setContentText("Invalid Student Id or Password");
+            message.setTitle("Unsuccessful Login");
+            message.show();
+        }
+        System.out.println("Login Unsuccessful");
+        logInPasswordHide.setText("");
+        logInPassword.setText("");
+        logInStudentId.setText("");
     }
+
+    private String getPassword() {
+        if (showPassword.isSelected()) {
+            return logInPassword.getText();
+        } else {
+            return logInPasswordHide.getText();
+        }
+    }
+
 }
 
 

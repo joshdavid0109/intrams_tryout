@@ -11,12 +11,10 @@ public class RegisteredUser implements Serializable {
     private String contactNumber;
     private String password;
 
-    public RegisteredUser(int regId, int studentId, int department, int appliedSport, String schedCode, String contactNumber, String password) {
+    public RegisteredUser(int regId, int studentId,  int appliedSport,  String contactNumber, String password) {
         this.regId = regId;
         this.studentId = studentId;
-        this.department = department;
         this.appliedSport = appliedSport;
-        this.schedCode = schedCode;
         this.contactNumber = contactNumber;
         this.password = password;
     }

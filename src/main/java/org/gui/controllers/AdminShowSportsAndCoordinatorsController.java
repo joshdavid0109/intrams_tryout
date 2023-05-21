@@ -52,6 +52,7 @@ public class AdminShowSportsAndCoordinatorsController implements Initializable {
         coachTTColumn.setCellValueFactory(
             (TreeTableColumn.CellDataFeatures<Coach,String> param) ->
                     new SimpleStringProperty(param.getValue().getValue().getName()));
+
         sportsCodeTTColumn.setCellValueFactory(
                 (TreeTableColumn.CellDataFeatures<Coach,String> param) ->
                         new SimpleStringProperty(param.getValue().getValue().getSport()));
