@@ -224,6 +224,7 @@ public class DataPB {
 
 
     public static String showStatusOfStudent(int studentId) throws SQLException {
+        String status = "";
 
         try {
             String query = "select tryout_sched_details.status\n" +
@@ -235,14 +236,14 @@ public class DataPB {
             statement.setInt(1, studentId);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                String status = rs.getString("status");
+                status = rs.getString("status");
                 System.out.println(status);
             }
 
         }catch (Exception e) {
             throw e;
         }
-        return null;
+        return status;
     }
 
     public static boolean loginCoach(int coachNo, String password) {
@@ -331,7 +332,7 @@ public class DataPB {
         ArrayList<TryoutSchedule> schedules = new ArrayList<>();
 
         try {
-            String query = "SELECT ts.scheduleCode, ts.date, ts.start_time, ts.end_time, ts.location, ts.sportsCode, ts.deptTryoutCode, t.status\n" +
+            String query = "SELECT ts.scheduleCode, ts.date, ts.start_time, ts.end_time, ts.location, ts.sportsCode, ts.coachNo, t.status\n" +
                     "FROM tryout_schedule ts\n" +
                     "INNER JOIN tryout_sched_details t ON ts.scheduleCode = t.scheduleCode\n" +
                     "INNER JOIN registration_list r ON t.registrationId = r.registrationId\n" +

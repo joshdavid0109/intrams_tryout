@@ -38,7 +38,6 @@ public class StudentResultController implements Initializable {
     private Text statusText;
 
     public static int studentID;
-    public static String status;
 
     /**
      * Called to initialize a controller after its root element has been completely processed.
@@ -50,9 +49,11 @@ public class StudentResultController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             int regId = DataPB.showRegistrationId(studentID);
+
             regID.setText(String.valueOf(studentID));
             regID.setText(String.valueOf(regId));
-            status = DataPB.showStatusOfStudent(studentID);
+
+            String status = DataPB.showStatusOfStudent(studentID);
             statusText.setText(status);
 //            int deptId = DataPB.getDeptId(studentID);
 
@@ -69,8 +70,6 @@ public class StudentResultController implements Initializable {
             dateTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getDate().toString()));
             timeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getStartTime().toString()));
             locationTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getLocation()));
-
-
 
             treeTableView.setRoot(rootItem);
             treeTableView.setShowRoot(false);
