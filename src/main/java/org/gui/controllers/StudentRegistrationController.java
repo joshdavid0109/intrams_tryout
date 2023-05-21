@@ -9,18 +9,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.gui.objects.Department;
 import org.gui.objects.RegisteredUser;
 import org.gui.objects.Sport;
-import org.gui.objects.Student;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class StudentRegistrationController {
+public class StudentRegistrationController implements Initializable {
 
     @FXML
     private Button loadLoginGUIbtn, returnRegisterInformation;
@@ -39,29 +37,21 @@ public class StudentRegistrationController {
     private StackPane parentContainer;
     @FXML
     private Button regButton;
-
     @FXML
     private PasswordField regPasswordHide;
-
     @FXML
     private CheckBox regShowPassword;
-
     @FXML
     private TextField regPassword;
-
     @FXML
     private TextField contactNumberField;
     @FXML
     private TextField regStudentId;
-
     @FXML
-    private ComboBox<String> sportComboBox;
+    private ChoiceBox<Sport> sportChoiceBox;
 
     private int sportsCode;
 
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
 
     @FXML
     public void loadLoginGUI() throws IOException {
@@ -107,27 +97,16 @@ public class StudentRegistrationController {
         String studIdText = regStudentId.getText();
         String password = regPassword.getText();
         String contactNo = contactNumberField.getText();
-        String selectedSport = sportComboBox.getValue(); // Get the selected option from the ComboBox
+
+        Sport selectedSport = sportChoiceBox.getValue(); // Get the selected option from the choice box
 
 
-        if (selectedSport == null || selectedSport.isEmpty()) {
-            showAlert("Error", "Please select a sport!");
-            return;
-        }
-
-        switch (selectedSport) {
-            case "Basketball":
-                sportsCode = 1;
-                break;
-            case "Hockey":
-                sportsCode = 2;
-                break;
-            case "Association Football":
-                sportsCode = 3;
-                break;
-            default:
-                sportsCode = 0;
-                break;
+        if (selectedSport == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ERROR");
+            alert.setHeaderText(null);
+            alert.setContentText("SELECT VALUES");
+            alert.showAndWait();
         }
 
 
@@ -175,6 +154,8 @@ public class StudentRegistrationController {
 
 //        int deptId = DataPB.getDeptId(studId);
 
+        sportsCode = Objects.requireNonNull(selectedSport).getSportsCode();
+
         System.out.println("helu");
         DataPB.addStudent(new org.gui.objects.RegisteredUser(registeredUsers.size() + 1, studId, sportsCode,
                 contactNo, password));
@@ -210,9 +191,19 @@ public class StudentRegistrationController {
         }
     }
 
-    public void clicky(MouseEvent mouseEvent) {
-        ObservableList<String> list = FXCollections.observableArrayList("Basketball", "Hockey", "Association Football");
-        sportComboBox.getItems().setAll(list);
-        sportComboBox.getSelectionModel().selectFirst();
+    private void populateSportsList(){
+        try {
+            System.out.println(DataPB.getAvailableSports());
+            ArrayList<Sport> sports = DataPB.getAvailableSports();
+            ObservableList<Sport> sportsList = FXCollections.observableArrayList(sports);
+            sportChoiceBox.setItems(sportsList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        populateSportsList();
     }
 }
