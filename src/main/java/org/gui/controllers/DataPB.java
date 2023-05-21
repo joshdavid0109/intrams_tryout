@@ -11,7 +11,7 @@ public class DataPB {
 
     static {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/im?user=root&password");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cbts?user=root&password");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -135,6 +135,30 @@ public class DataPB {
             rs.close();
         }catch (Exception e) {
             throw e;
+        }
+    }
+
+    public static boolean loginCoach(int coachNo, String password) {
+        try {
+            String query = "select count(*) FROM coach where coachNo = ? and password = ?";
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, coachNo);
+            statement.setString(2, password);
+            ResultSet rs = statement.executeQuery();
+
+            rs.next();
+
+            System.out.println(coachNo + "" + password);
+
+            int count = rs.getInt(1);
+
+            if (count > 0) {
+                return true;
+            }
+
+            return false;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

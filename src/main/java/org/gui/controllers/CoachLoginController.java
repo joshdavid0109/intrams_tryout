@@ -13,9 +13,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -73,6 +75,46 @@ public class CoachLoginController {
 
     public void logInNa(ActionEvent actionEvent) throws Exception {
 
+        String coachNoCheck = logInUsername.getText();
+        if (coachNoCheck.isEmpty()) {
+            System.out.println("Student ID is required.");
+            return;
+        }
+
+        int coachNo = Integer.parseInt(coachNoCheck);
+        String password = getPassword();
+
+        boolean isLoggedIn = DataPB.loginCoach(coachNo, password);
+
+        if (isLoggedIn) {
+            System.out.println("Welcome Coach");
+
+            Stage loginStage = (Stage) logInButton.getScene().getWindow();
+            loginStage.close();
+
+            Stage primaryStage = new Stage();
+            Image image = new Image("SLU_LOGO.jpg");
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/coachMain.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            primaryStage.setTitle("Coach");
+            primaryStage.getIcons().add(image);
+            primaryStage.setResizable(false);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } else {
+            System.out.println("Invalid Credentials");
+        }
+    }
+
+    private String getPassword() {
+        if (showPassword.isSelected()) {
+            return logInPassword.getText();
+        } else {
+            return logInPasswordHide.getText();
+        }
     }
 }
 

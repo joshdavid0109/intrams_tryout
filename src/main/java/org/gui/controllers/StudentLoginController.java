@@ -45,10 +45,6 @@ public class StudentLoginController {
     private AnchorPane loginAnchorPane;
     @FXML
     private StackPane parentContainer;
-    
-
-
-
 
     @FXML
     public void LoadRegisterInformationGUI() throws IOException {
@@ -93,7 +89,7 @@ public class StudentLoginController {
         boolean isLoggedIn = DataPB.loginStudent(studentId, password);
 
         if (isLoggedIn) {
-            System.out.println("Welcome boss");
+            System.out.println("Welcome Student");
 
             Stage loginStage = (Stage) logInButton.getScene().getWindow();
             loginStage.close();
@@ -111,7 +107,7 @@ public class StudentLoginController {
             primaryStage.setScene(scene);
             primaryStage.show();
         } else {
-            System.out.println("wrong deets");
+            System.out.println("Invalid Credentials");
         }
     }
 
