@@ -429,6 +429,31 @@ public class DataPB {
         return coaches;
     }
 
+    public static void addCoach(int coachNo, int sportsCode) throws Exception{
+
+        String coachPass = generateNewCoachId();
+        String query = "INSERT INTO coach (coachNo, password, sportsCode) VALUES (?, ?, ?)";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, coachNo);
+        statement.setString(2, coachPass);
+        statement.setInt(3, sportsCode);
+
+        statement.executeUpdate();
+
+    }
+
+    private static String generateNewCoachId() throws SQLException {
+        String sql = "SELECT password FROM coach ORDER BY password DESC LIMIT 1";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+        String latestStringId = resultSet.next() ? resultSet.getString("password") : "coach0";
+        resultSet.close();
+        statement.close();
+
+        int coachNo = Integer.parseInt(latestStringId.substring(5)) + 1;
+        return "coach" + coachNo;
+    }
+
     public static ArrayList<Coordinator> getAllCoordinators() throws Exception{
 
         ArrayList<Coordinator> coordinators = new ArrayList<>();

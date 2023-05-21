@@ -9,8 +9,12 @@ import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import org.gui.objects.Coordinator;
 import org.gui.objects.Sport;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -25,10 +29,10 @@ public class AdminAssignController implements Initializable {
     public Button cancelAssignSportsBTN;
 
     @FXML
-    public ChoiceBox<String> sportsChoiceBox;
+    public ChoiceBox<Sport> sportsChoiceBox;
 
     @FXML
-    public ChoiceBox<String> coordinatorChoiceBox;
+    public ChoiceBox<Coordinator> coordinatorChoiceBox;
 
     private Map<Integer, String> sportsMap;
     private Map<Integer, String> coordinatorsMap;
@@ -39,10 +43,42 @@ public class AdminAssignController implements Initializable {
         populateCoordinatorsList();
     }
 
-
-
     public void assignSport(ActionEvent event) {
-        System.out.println();
+        try{
+            Sport selectedSport = sportsChoiceBox.getValue();
+            Coordinator selectedCoordinator = coordinatorChoiceBox.getValue();
+
+            if(selectedSport == null || selectedCoordinator == null){
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("ERROR");
+                alert.setHeaderText(null);
+                alert.setContentText("SELECT VALUES");
+                alert.showAndWait();
+            }
+            else{
+                DataPB.addCoach(selectedCoordinator.getCoordinatorID(), selectedSport.getSportsCode());
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("ASSIGNMENT SUCCESSFUL");
+                alert.setHeaderText(null);
+                alert.setContentText("COORDINATOR: " + selectedCoordinator.getFirstName() +" "+selectedCoordinator.getLastName() + " has been assigned to the sport\n"
+                        + selectedSport.getSportsDescription() + "'s " + selectedSport.getSportsName());
+                alert.showAndWait();
+            }
+        }catch (SQLException e){
+            //TODO DAPAT YUNG MGA COORDINATOR LANG NA WALANG SPORT YUNG PWEDE ISELECT!!!!!!!!! PARA DI MAG ERROR NA KASJY
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("SQL EXCEPTION");
+            alert.setHeaderText(null);
+            alert.setContentText("COORDINATOR HAS ALREADY BEEN ASSIGNED TO A SPORT:(");
+            alert.showAndWait();
+        }
+        catch (Exception e){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("ERROR");
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     public void cancelSport(ActionEvent event) {
@@ -52,48 +88,23 @@ public class AdminAssignController implements Initializable {
     private void populateSportsList(){
 
         try {
-            System.out.println(DataPB.getAllCoordinators());
             System.out.println(DataPB.getAvailableSports());
+            ArrayList<Sport> sports = DataPB.getAvailableSports();
+            ObservableList<Sport> sportsList = FXCollections.observableArrayList(sports);
+            sportsChoiceBox.setItems(sportsList);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        sportsMap = new HashMap<>();
-        sportsMap.put(1, "BasketBall-Men");
-        sportsMap.put(2, "Football-Women");
-        sportsMap.put(3, "Hockey-Women");
-        sportsMap.put(4, "BasketBall-Women");
-
-        ObservableList<String> sportsList = FXCollections.observableArrayList();
-        for (Map.Entry<Integer, String> entry : sportsMap.entrySet()) {
-            int id = entry.getKey();
-            String description = entry.getValue();
-            String[] sportParts = description.split("-");
-            if (sportParts.length == 2) {
-                String name = sportParts[0];
-                String category = sportParts[1];
-                sportsList.add(new Sport(id, name, category).toString());
-            }
-        }
-
-        sportsChoiceBox.setItems(sportsList);
     }
     private void populateCoordinatorsList() {
-        /*coordinatorsMap = new HashMap<>();
-        coordinatorsMap.put(1, "John Brown");
-        coordinatorsMap.put(2, "bla bla");
-        coordinatorsMap.put(3, "asd asd");
-        coordinatorsMap.put(4, "we we");
-
-        ObservableList<String> coordinatorList = FXCollections.observableArrayList();
-        for (Map.Entry<Integer, String> entry : coordinatorsMap.entrySet()) {
-            int id = entry.getKey();
-            String description = entry.getValue();
-            String[] sportParts = description.split("-");
-            //coordinatorList.add(new Coordinator(id, firstname, lastName, deptID).toString());
-            }
-
-        coordinatorChoiceBox.setItems(coordinatorList);*/
+        try {
+            System.out.println(DataPB.getAllCoordinators());
+            ArrayList<Coordinator> coordinators = DataPB.getAllCoordinators();
+            ObservableList<Coordinator> coordinatorsList = FXCollections.observableArrayList(coordinators);
+            coordinatorChoiceBox.setItems(coordinatorsList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
