@@ -56,10 +56,9 @@ public class AdminLoginController {
         Alert message = new Alert(Alert.AlertType.INFORMATION);
 
         String adminUsername = logInUsername.getText();
-        String loginPassword = logInPassword.getText();
 
-        if (adminUsername.isEmpty() || loginPassword.isEmpty()) {
-            message.setContentText("Missing Credentials");
+        if (adminUsername.isEmpty()) {
+            message.setContentText("Invalid User Name or Password");
             message.setTitle("Unsuccessful Login");
             message.show();
 

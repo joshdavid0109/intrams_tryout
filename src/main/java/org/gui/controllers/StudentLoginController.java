@@ -79,10 +79,9 @@ public class StudentLoginController {
         Alert message = new Alert(Alert.AlertType.INFORMATION);
 
         String studentIdText = logInStudentId.getText();
-        String loginPassword = logInPassword.getText();
 
-        if (studentIdText.isEmpty() || loginPassword.isEmpty()) {
-            message.setContentText("Missing Credentials");
+        if (studentIdText.isEmpty()) {
+            message.setContentText("Invalid Student Id or Password");
             message.setTitle("Unsuccessful Login");
             message.show();
 

@@ -55,10 +55,9 @@ public class CoachLoginController {
         Alert message = new Alert(Alert.AlertType.INFORMATION);
 
         String coachNoCheck = logInUsername.getText();
-        String loginPassword = logInPassword.getText();
 
-        if (coachNoCheck.isEmpty() || loginPassword.isEmpty()) {
-            message.setContentText("Missing Credentials");
+        if (coachNoCheck.isEmpty()) {
+            message.setContentText("Invalid Coach No or Password");
             message.setTitle("Unsuccessful Login");
             message.show();
 
