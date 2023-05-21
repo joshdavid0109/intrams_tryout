@@ -23,7 +23,10 @@ public class StudentResultController implements Initializable {
     private TreeTableColumn<TryoutSchedule, String> dateTT;
 
     @FXML
-    private TreeTableColumn<TryoutSchedule, String> timeTT;
+    private TreeTableColumn<TryoutSchedule, String> startTimeTT;
+
+    @FXML
+    private TreeTableColumn<TryoutSchedule, String> endTimeTT;
 
     @FXML
     private TreeTableColumn<TryoutSchedule, String> locationTT;
@@ -67,10 +70,9 @@ public class StudentResultController implements Initializable {
             }
             schedCodeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getScheduleCode()));
             dateTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getDate().toString()));
-            timeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getStartTime().toString()));
+            startTimeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getStartTime().toString()));
+            endTimeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getEndTime().toString()));
             locationTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getLocation()));
-
-
 
             treeTableView.setRoot(rootItem);
             treeTableView.setShowRoot(false);
