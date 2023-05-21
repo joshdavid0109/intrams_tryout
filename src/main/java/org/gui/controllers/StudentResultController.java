@@ -48,12 +48,13 @@ public class StudentResultController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        regID.setText(String.valueOf(studentID));
         try {
             int regId = DataPB.showRegistrationId(studentID);
+            regID.setText(String.valueOf(studentID));
             regID.setText(String.valueOf(regId));
-            String sportsCode = DataPB.showStatusOfStudent(studentID);
-            int deptId = DataPB.getDeptId(studentID);
+            status = DataPB.showStatusOfStudent(studentID);
+            statusText.setText(status);
+//            int deptId = DataPB.getDeptId(studentID);
 
             // retrieve da tryout sched
             ArrayList<TryoutSchedule> schedules = DataPB.getTryOutSchedule(studentID);
@@ -77,8 +78,6 @@ public class StudentResultController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        statusText.setText(status);
     }
 
 }
