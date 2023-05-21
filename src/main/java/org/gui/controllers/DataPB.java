@@ -302,7 +302,7 @@ public class DataPB {
 
     public static void addSchedule(TryoutSchedule tryoutSchedule) {
         String getMaxScheduleCodeQuery = "SELECT MAX(CAST(scheduleCode AS UNSIGNED)) AS maxCode FROM tryout_schedule";
-        String insertScheduleQuery = "INSERT INTO tryout_schedule(scheduleCode, sportsCode, deptTryoutCode, date, start_time, end_time, location) VALUES(?,?,?,?,?,?,?)";
+        String insertScheduleQuery = "INSERT INTO tryout_schedule(scheduleCode, sportsCode, coachNo, date, start_time, end_time, location) VALUES(?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement getMaxCodeStatement = connection.prepareStatement(getMaxScheduleCodeQuery);
@@ -423,7 +423,7 @@ public class DataPB {
     public static ArrayList<TryoutSchedule> getTryouts(int sportsCode, int deptId) throws SQLException {
         ArrayList<TryoutSchedule> tryoutSchedules = new ArrayList<>();
         try {
-            String query = "select tryout_schedule.scheduleCode,tryout_schedule.sportsCode, tryout_schedule.deptTryoutCode," +
+            String query = "select tryout_schedule.scheduleCode,tryout_schedule.sportsCode, tryout_schedule.coachNo," +
                     " tryout_schedule.date, tryout_schedule.start_time, " +
                     "tryout_schedule.end_time, tryout_schedule.location, tryout_schedule.totalstudents\n" +
                     "from tryout_schedule\n" +
@@ -569,7 +569,7 @@ public class DataPB {
             String query = "select tryout_schedule.scheduleCode, tryout_schedule.date, tryout_schedule.start_time,\n" +
                     "       tryout_schedule.end_time, tryout_schedule.location\n" +
                     "from tryout_schedule\n" +
-                    "       where tryout_schedule.deptTryoutCode=?";
+                    "       where tryout_schedule.coachNo=?";
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, coordId);
             ResultSet rs = statement.executeQuery();
