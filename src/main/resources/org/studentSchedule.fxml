@@ -20,7 +20,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="364.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: DARKGREEN;" text="SAVE" textFill="WHITE">
+            <Button layoutX="364.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: DARKGREEN;" text="APPLY" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
