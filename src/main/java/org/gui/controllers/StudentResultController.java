@@ -52,11 +52,11 @@ public class StudentResultController implements Initializable {
         try {
             int regId = DataPB.showRegistrationId(studentID);
             regID.setText(String.valueOf(regId));
-            int sportsCode = DataPB.getSportsCodeOfUser(studentID);
+            String sportsCode = DataPB.showStatusOfStudent(studentID);
             int deptId = DataPB.getDeptId(studentID);
 
             // retrieve da tryout sched
-            ArrayList<TryoutSchedule> schedules = DataPB.getTryOutSchedule(sportsCode, deptId);
+            ArrayList<TryoutSchedule> schedules = DataPB.getTryOutSchedule(studentID);
 
             TreeItem<TryoutSchedule> rootItem = new TreeItem<>(new TryoutSchedule("null", null, null, null, ""));
             // populate da treee table
