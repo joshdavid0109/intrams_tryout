@@ -290,16 +290,18 @@ public class DataPB {
         return studentId;
     }
 
-    public static void getTryOutSchedule(int sportsCode, int depId) throws SQLException {
+    public static ArrayList<TryoutSchedule> getTryOutSchedule(int sportsCode, int depId) throws SQLException {
+        ArrayList<TryoutSchedule> schedules = new ArrayList<>();
+
         try {
-            String query = "select tryout_schedule.scheduleCode, tryout_schedule.date, tryout_schedule.start_time, " +
+            String query = "SELECT tryout_schedule.scheduleCode, tryout_schedule.date, tryout_schedule.start_time, " +
                     "tryout_schedule.end_time, tryout_schedule.location\n" +
-                    "from tryout_schedule\n" +
-                    "    inner join coach c\n" +
-                    "    using (sportsCode)\n" +
-                    "    inner join coordinators c2\n" +
-                    "    on c.coachNo = c2.idcoordinators\n" +
-                    "where sportsCode=? AND deptID=?";
+                    "FROM tryout_schedule\n" +
+                    "    INNER JOIN coach c\n" +
+                    "    USING (sportsCode)\n" +
+                    "    INNER JOIN coordinators c2\n" +
+                    "    ON c.coachNo = c2.idcoordinators\n" +
+                    "WHERE sportsCode=? AND deptID=?";
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, sportsCode);
             statement.setInt(2, depId);
@@ -308,20 +310,28 @@ public class DataPB {
             if (!rs.next()) {
                 System.err.println("No available schedule yet for your department and applied sport.");
             } else {
-                System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", "Schedule Code", "Date (YYYY-mm-dd)", "Start Time", "End Time",
-                        "Location");
-                System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", "-------------", "-----------------", "----------", "--------",
-                        "--------");
                 do {
-                    System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", rs.getString(1), rs.getString(2), rs.getString(3),
-                            rs.getString(4), rs.getString(5));
+                    String scheduleCode = rs.getString("scheduleCode");
+                    Date date = rs.getDate("date");
+                    Time startTime = rs.getTime("start_time");
+                    Time endTime = rs.getTime("end_time");
+                    String location = rs.getString("location");
+
+                    TryoutSchedule schedule = new TryoutSchedule(scheduleCode, date, startTime, endTime, location);
+                    schedules.add(schedule);
                 } while (rs.next());
             }
+
             rs.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw e;
         }
+
+        return schedules;
     }
+
+
+
 
     public static ArrayList<Sport> getAvailableSports() throws Exception{
         ArrayList<Sport> sports = new ArrayList<>();
