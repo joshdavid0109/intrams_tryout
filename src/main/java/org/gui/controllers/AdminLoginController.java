@@ -36,8 +36,6 @@ public class AdminLoginController {
     @FXML
     public ImageView samcisLogo;
     @FXML
-    private Button loadRegisterGUIbtn;
-    @FXML
     private AnchorPane loginAnchorPane;
     @FXML
     private StackPane parentContainer;

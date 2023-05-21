@@ -48,7 +48,7 @@ public class StudentLoginController {
 
     @FXML
     public void LoadRegisterInformationGUI() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/registerInterfacePersonalDetails.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/registerInterface.fxml")));
         Scene scene = loadRegisterGUIbtn.getScene();
 
         root.translateXProperty().set(scene.getWidth());
