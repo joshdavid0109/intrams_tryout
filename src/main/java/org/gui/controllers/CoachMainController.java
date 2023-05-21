@@ -55,11 +55,12 @@ public class CoachMainController implements Initializable {
     @FXML
     private Text assignText;
 
+    public int coachNo;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        System.out.println(coachNo+" < COACH NUM");
     }
-
     @FXML
     public void homePage(javafx.scene.input.MouseEvent mouseEvent) {
         if (homeButton.isPressed()) {
@@ -125,8 +126,15 @@ public class CoachMainController implements Initializable {
         homeButton.setStyle("-fx-background-color: #13202FFF");
         showButton.setStyle("-fx-background-color: #13202FFF");
         assignButton.setStyle("-fx-background-color: #13202FFF");
-
-        loadPage("/org/coachCreateSchedule.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/coachCreateSchedule.fxml"));
+        try {
+            Parent root = fxmlLoader.load();
+            CoachCreateScheduleController controller = fxmlLoader.getController();
+            controller.setCoachNo(coachNo);
+            borderPane.setCenter(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -154,14 +162,11 @@ public class CoachMainController implements Initializable {
 
     private void loadPage(String page) {
         Parent root = null;
-
-
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(page)));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         borderPane.setCenter(root);
     }
 
@@ -187,5 +192,14 @@ public class CoachMainController implements Initializable {
         Stage stage = (Stage) logOutButton.getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setCoachNo(int coachNo) {
+        this.coachNo = coachNo;
+        System.out.println("asd coach no set "+coachNo);
+    }
+
+    public int getCoachNo() {
+        return coachNo;
     }
 }

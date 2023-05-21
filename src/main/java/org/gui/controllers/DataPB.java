@@ -184,6 +184,23 @@ public class DataPB {
             throw new RuntimeException(e);
         }
     }
+    public static int getSportsCodeOfCoach(int coachNo) {
+        int sportsCode = 0;
+        try {
+            String query = "SELECT sportsCode FROM coach WHERE coachNo = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, coachNo);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                sportsCode = resultSet.getInt("sportsCode");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sportsCode;
+    }
 
     public static int getDeptId(int studentId) throws SQLException {
         int deptId = 0;
@@ -262,19 +279,27 @@ public class DataPB {
 
 
     public static void addSchedule(TryoutSchedule tryoutSchedule) {
-        String query = "INSERT INTO tryout_schedule(scheduleCode, sportsCode, deptTryoutCode, date, start_time," +
-                "end_time, location, totalStudents) VALUES(?,?,?,?,?,?,?,?)";
+        String getMaxScheduleCodeQuery = "SELECT MAX(CAST(scheduleCode AS UNSIGNED)) AS maxCode FROM tryout_schedule";
+        String insertScheduleQuery = "INSERT INTO tryout_schedule(scheduleCode, sportsCode, deptTryoutCode, date, start_time, end_time, location) VALUES(?,?,?,?,?,?,?)";
+
         try {
-            PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ps.setString(1, tryoutSchedule.getScheduleCode());
-            ps.setInt(2, tryoutSchedule.getSportsCode());
-            ps.setInt(3, tryoutSchedule.getDeptTryoutCode());
-            ps.setDate(4, tryoutSchedule.getDate());
-            ps.setTime(5, tryoutSchedule.getStartTime());
-            ps.setTime(6, tryoutSchedule.getEndTime());
-            ps.setString(7, tryoutSchedule.getLocation());
-            ps.setInt(8, tryoutSchedule.getTotalStudents());
-            ps.execute();
+            PreparedStatement getMaxCodeStatement = connection.prepareStatement(getMaxScheduleCodeQuery);
+            ResultSet maxCodeResult = getMaxCodeStatement.executeQuery();
+            int maxCode = 0;
+            if (maxCodeResult.next()) {
+                maxCode = maxCodeResult.getInt("maxCode");
+            }
+            int newCode = maxCode + 1;
+            PreparedStatement insertStatement = connection.prepareStatement(insertScheduleQuery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            insertStatement.setInt(1, newCode);
+            insertStatement.setInt(2, tryoutSchedule.getSportsCode());
+            insertStatement.setInt(3, tryoutSchedule.getDeptTryoutCode());
+            insertStatement.setDate(4, tryoutSchedule.getDate());
+            insertStatement.setTime(5, tryoutSchedule.getStartTime());
+            insertStatement.setTime(6, tryoutSchedule.getEndTime());
+            insertStatement.setString(7, tryoutSchedule.getLocation());
+            insertStatement.execute();
+
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

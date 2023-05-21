@@ -84,6 +84,8 @@ public class CoachLoginController {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/coachMain.fxml"));
             Parent root = fxmlLoader.load();
+            CoachMainController coachMainController = fxmlLoader.getController();
+            coachMainController.setCoachNo(coachNo);
 
             Scene scene = new Scene(root);
             primaryStage.setTitle("Coach");
@@ -91,13 +93,13 @@ public class CoachLoginController {
             primaryStage.setResizable(false);
             primaryStage.setScene(scene);
             primaryStage.show();
+
         } else {
             message.setContentText("Invalid Coach No or Password");
             message.setTitle("Unsuccessful Login");
             message.show();
         }
 
-        System.out.println("Login Unsuccessful");
         logInPasswordHide.setText("");
         logInPassword.setText("");
         logInUsername.setText("");

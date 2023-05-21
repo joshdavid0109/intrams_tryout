@@ -9,6 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.ChoiceBox?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.CoachCreateScheduleController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -60,10 +61,10 @@
                   <Font size="19.0" />
                </font>
             </Text>
-            <TextField fx:id="startTime" layoutX="248.0" layoutY="196.0" prefHeight="25.0" prefWidth="180.0" promptText="Enter Start Time" />
-            <TextField fx:id="endTime" layoutX="248.0" layoutY="236.0" prefHeight="25.0" prefWidth="180.0" promptText="Enter End Time" />
-            <TextField fx:id="location" layoutX="248.0" layoutY="276.0" prefHeight="25.0" prefWidth="180.0" promptText="Enter Location" />
-            <DatePicker fx:id="datePicker" layoutX="248.0" layoutY="157.0" prefHeight="25.0" prefWidth="180.0" promptText="00/00/0000" />
+            <TextField fx:id="startTime" layoutX="248.0" layoutY="196.0" prefHeight="25.0" prefWidth="180.0" promptText="HH:mm:ss" />
+            <TextField fx:id="endTime" layoutX="248.0" layoutY="236.0" prefHeight="25.0" prefWidth="180.0" promptText="HH:mm:ss" />
+            <ChoiceBox fx:id="LocationChoiceBox" layoutX="248.0" layoutY="276.0" prefHeight="25.0" prefWidth="180.0"/>
+            <DatePicker fx:id="datePicker" layoutX="248.0" layoutY="157.0" prefHeight="25.0" prefWidth="180.0" promptText="DD/MM/YYYY" />
          </children>
       </Pane>
    </center>

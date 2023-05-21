@@ -26,6 +26,17 @@ public class TryoutSchedule implements Serializable {
         this.totalStudents = totalStudents;
     }
 
+    //
+    public TryoutSchedule(int sportsCode, int deptTryoutCode, Date date, Time startTime,
+                          Time endTime, String location) {
+        this.sportsCode = sportsCode;
+        this.deptTryoutCode = deptTryoutCode;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+    }
+
     public String getScheduleCode() {
         return scheduleCode;
     }
@@ -92,7 +103,7 @@ public class TryoutSchedule implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%-20s%-20d%-20d%-20s%-15s%-10s%-45s%-35d", scheduleCode, sportsCode, deptTryoutCode,
-                date, startTime, endTime, location, totalStudents   );
+        return String.format("%-20d%-20d%-20s%-15s%-10s%-45s", sportsCode, deptTryoutCode,
+                date, startTime, endTime, location);
     }
 }
