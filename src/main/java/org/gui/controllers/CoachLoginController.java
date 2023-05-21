@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.gui.main.CoachMain;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -74,6 +75,7 @@ public class CoachLoginController {
         boolean isLoggedIn = DataPB.loginCoach(coachNo, password);
 
         if (isLoggedIn) {
+            CoachMainController.coachNo = coachNo;
             System.out.println("Welcome Coach");
 
             Stage loginStage = (Stage) logInButton.getScene().getWindow();

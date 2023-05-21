@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.CoachShowTryOutController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.CoachShowTryOutController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -20,6 +14,11 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Text>
+            <Button fx:id="acceptBtn" layoutX="399.0" layoutY="161.0" mnemonicParsing="false" onAction="#accept" style="-fx-background-color: DARKGREEN;" text="ACCEPT" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
             <Text fill="#ffa514" layoutX="74.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EVALUATION" textAlignment="CENTER" wrappingWidth="349.41180419921875">
                <font>
                   <Font name="System Bold" size="30.0" />
@@ -31,21 +30,17 @@
                      <children>
                         <TreeTableView fx:id="treeTableView" prefWidth="367.0">
                           <columns>
-                            <TreeTableColumn fx:id="registrationIdColumn" editable="false" prefWidth="122.39996033906937" resizable="false" text="REGISTRATION ID" />
-                            <TreeTableColumn fx:id="scheduleCodeColumn" editable="false" prefWidth="119.20002746582031" resizable="false" sortable="false" text="SCHEDULE CODE" />
-                              <TreeTableColumn fx:id="statusColumn" editable="false" prefWidth="122.39996033906937" resizable="false" text="STATUS" />
+                            <TreeTableColumn fx:id="registrationIdColumn" editable="false" prefWidth="55.0" resizable="false" text="ID" />
+                              <TreeTableColumn fx:id="fullNameColumn" editable="false" prefWidth="86.0" resizable="false" sortable="false" text="Full Name" />
+                            <TreeTableColumn fx:id="scheduleCodeColumn" editable="false" prefWidth="103.0" resizable="false" sortable="false" text="Schedule Code" />
+                              <TreeTableColumn fx:id="statusColumn" editable="false" prefWidth="122.0" resizable="false" text="Status" />
                           </columns>
                         </TreeTableView>
                      </children>
                   </AnchorPane>
               </content>
             </ScrollPane>
-            <Button layoutX="399.0" layoutY="161.0" mnemonicParsing="false" style="-fx-background-color: DARKGREEN;" text="ACCEPT" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button layoutX="398.0" layoutY="221.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" style="-fx-background-color: DARKRED;" text="REJECT" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="rejectBtn" layoutX="398.0" layoutY="221.0" mnemonicParsing="false" onAction="#reject" prefHeight="25.0" prefWidth="62.0" style="-fx-background-color: DARKRED;" text="REJECT" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

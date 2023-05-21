@@ -17,6 +17,28 @@ public class DataPB {
         }
     }
 
+    public static ArrayList<TryoutSchedule> coachGetTryoutSchedule(int coachId) {
+        ArrayList<TryoutSchedule> schedules = new ArrayList<>();
+        try {
+            String query = "select scheduleCode, date, start_time, end_time, location from tryout_schedule where coachNo = ?";
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, coachId);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+
+                schedules.add(new TryoutSchedule(rs.getString(1), rs.getDate(2), rs.getTime(3),
+                        rs.getTime(4), rs.getString(5)));
+            }
+
+            rs.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return schedules;
+    }
+
     public static boolean loginStudent(int studentId, String password) {
         try {
             String query = "select count(*) FROM registration_list where studentId = ? and password = ?";
@@ -305,6 +327,19 @@ public class DataPB {
         }
     }
 
+    public static int getCoachSportsCode(int coachID) throws SQLException {
+        String query = "SELECT sportsCode FROM coach where coachNo=?";
+        PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE  );
+        statement.setInt(1, coachID);
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            return resultSet.getInt(1);
+        }
+        resultSet.close();
+        return 0;
+    }
+
     public static ArrayList<RegisteredUser> getRegisteredStudents() throws SQLException {
         ArrayList<RegisteredUser> registeredUsers = new ArrayList<>();
         String query = "SELECT * FROM registration_list";
@@ -354,15 +389,18 @@ public class DataPB {
     }
 
 
-    public static ArrayList<TryoutSchedDetails> getTryOutSchedDetails() throws Exception   {
+    public static ArrayList<TryoutSchedDetails> getTryOutSchedDetails(int coachNo) throws Exception   {
         ArrayList<TryoutSchedDetails> schedDetails = new ArrayList<>();
-        String query = "SELECT * FROM tryout_sched_details";
-        Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE  );
-        ResultSet resultSet = statement.executeQuery(query);
+        String query = "SELECT registrationId, concat(firstName, space(1), lastName) as 'Full Name', scheduleCode, status\n" +
+                "FROM tryout_sched_details natural join tryout_schedule natural join registration_list natural join students\n" +
+                "where coachNo = ?";
+        PreparedStatement statement = connection.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE  );
+        statement.setInt(1, coachNo);
+        ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()) {
             schedDetails.add(new TryoutSchedDetails(resultSet.getInt(1), resultSet.getString(2),
-                    resultSet.getString(3)));
+                    resultSet.getString(3), resultSet.getString(4)));
         }
         resultSet.close();
         return schedDetails;
