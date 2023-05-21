@@ -13,6 +13,11 @@ public class Sport implements Serializable {
         this.sportsDescription = sportsDescription;
     }
 
+    @Override
+    public String toString() {
+        return sportsCode+" "+sportsName+" "+sportsDescription;
+    }
+
     public int getSportsCode() {
         return sportsCode;
     }

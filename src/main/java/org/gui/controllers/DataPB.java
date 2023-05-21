@@ -390,7 +390,6 @@ public class DataPB {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-
     }
 
 
@@ -428,6 +427,29 @@ public class DataPB {
         }
         rs.close();
         return coaches;
+    }
+
+    public static ArrayList<Coordinator> getAllCoordinators() throws Exception{
+
+        ArrayList<Coordinator> coordinators = new ArrayList<>();
+
+        String query = "SELECT * FROM coordinators";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        while (resultSet.next()) {
+            int id = resultSet.getInt("idcoordinators");
+            String lastName = resultSet.getString("lastName");
+            String firstName = resultSet.getString("firstName");
+            int deptID = resultSet.getInt("deptID");
+
+            Coordinator coordinator = new Coordinator(id, lastName, firstName, deptID);
+            coordinators.add(coordinator);
+        }
+        resultSet.close();
+        statement.close();
+
+        return coordinators;
     }
 
     public static void showScheduleForCoordinator(int coordId) throws SQLException {

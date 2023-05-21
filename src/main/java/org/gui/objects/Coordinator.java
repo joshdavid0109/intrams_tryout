@@ -15,6 +15,11 @@ public class Coordinator implements Serializable {
         this.deptID = deptID;
     }
 
+    @Override
+    public String toString() {
+        return coordinatorID+" "+firstName+" "+lastName+" "+deptID;
+    }
+
     public int getCoordinatorID() {
         return coordinatorID;
     }
