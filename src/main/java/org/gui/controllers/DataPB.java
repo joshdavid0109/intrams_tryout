@@ -332,11 +332,12 @@ public class DataPB {
         ArrayList<TryoutSchedule> schedules = new ArrayList<>();
 
         try {
-            String query = "SELECT ts.scheduleCode, ts.date, ts.start_time, ts.end_time, ts.location, ts.sportsCode, ts.coachNo, t.status\n" +
+            String query = "SELECT ts.scheduleCode, ts.date, ts.start_time, ts.end_time, ts.location " +
                     "FROM tryout_schedule ts\n" +
                     "INNER JOIN tryout_sched_details t ON ts.scheduleCode = t.scheduleCode\n" +
                     "INNER JOIN registration_list r ON t.registrationId = r.registrationId\n" +
                     "WHERE r.studentId = ?";
+
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, studentId);
