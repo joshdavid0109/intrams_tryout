@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.gui.objects.Department;
 import org.gui.objects.RegisteredUser;
@@ -41,12 +42,10 @@ public class StudentRegistrationController {
 
     @FXML
     private PasswordField regPasswordHide;
-    @FXML
-    private PasswordField regVerifyPasswordHide;
+
     @FXML
     private CheckBox regShowPassword;
-    @FXML
-    private CheckBox regVerifyShowPassword;
+
     @FXML
     private TextField regPassword;
 
@@ -180,7 +179,14 @@ public class StudentRegistrationController {
         DataPB.addStudent(new org.gui.objects.RegisteredUser(registeredUsers.size() + 1, studId, sportsCode,
                 contactNo, password));
 
-        //TODO lipat na sa StudentMain.java
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/org/studentMainInterface.fxml"));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) regButton.getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void showAlert(String title, String message) {

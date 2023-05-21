@@ -29,11 +29,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="354.0">
                      <children>
-                        <TreeTableView prefWidth="367.0">
+                        <TreeTableView fx:id="treeTableView" prefWidth="367.0">
                           <columns>
-                            <TreeTableColumn editable="false" prefWidth="122.39996033906937" resizable="false" text="REGISTRATION ID" />
-                            <TreeTableColumn editable="false" prefWidth="119.20002746582031" resizable="false" sortable="false" text="SCHEDULE CODE" />
-                              <TreeTableColumn editable="false" prefWidth="122.39996033906937" resizable="false" text="STATUS" />
+                            <TreeTableColumn fx:id="registrationIdColumn" editable="false" prefWidth="122.39996033906937" resizable="false" text="REGISTRATION ID" />
+                            <TreeTableColumn fx:id="scheduleCodeColumn" editable="false" prefWidth="119.20002746582031" resizable="false" sortable="false" text="SCHEDULE CODE" />
+                              <TreeTableColumn fx:id="statusColumn" editable="false" prefWidth="122.39996033906937" resizable="false" text="STATUS" />
                           </columns>
                         </TreeTableView>
                      </children>
