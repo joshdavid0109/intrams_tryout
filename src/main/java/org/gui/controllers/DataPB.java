@@ -156,6 +156,29 @@ public class DataPB {
         }
     }
 
+    public static int showRegistrationId(int studentId) throws SQLException {
+        int registrationId = -1;
+
+        try {
+            String query = "SELECT registrationId FROM registration_list INNER JOIN students\n" +
+                    "ON registration_list.studentID = students.studentID\n" +
+                    "WHERE students.studentID = ?";
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, studentId);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                registrationId = rs.getInt("registrationId");
+                System.out.println(registrationId);
+            }
+        } catch (SQLException e) {
+            // Handle the exception appropriately
+            e.printStackTrace();
+        }
+
+        return registrationId;
+    }
+
 
 
     public static void showStatusOfStudent(int studentId) throws SQLException {

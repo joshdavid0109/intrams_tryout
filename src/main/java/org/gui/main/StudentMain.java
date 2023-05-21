@@ -12,9 +12,9 @@ public class StudentMain extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Image image = new Image("SLU_LOGO.jpg");
-
         FXMLLoader fxmlLoader = new FXMLLoader(StudentMain.class.getResource("/org/studentMainInterface.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load())
+                ;
         primaryStage.setTitle("Student");
         primaryStage.getIcons().add(image);
         primaryStage.setResizable(false);
