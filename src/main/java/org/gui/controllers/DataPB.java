@@ -1,7 +1,5 @@
 package org.gui.controllers;
 
-import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
 import org.gui.objects.*;
 import org.gui.objects.Student;
 
@@ -225,9 +223,11 @@ public class DataPB {
 
 
 
-    public static void showStatusOfStudent(int studentId) throws SQLException {
+    public static String showStatusOfStudent(int studentId) throws SQLException {
+        String status = "";
+
         try {
-            String query = "select tryout_sched_details.scheduleCode, tryout_sched_details.status\n" +
+            String query = "select tryout_sched_details.status\n" +
                     "from tryout_sched_details\n" +
                     "    inner join registration_list\n" +
                     "        using (registrationId)\n" +
@@ -235,19 +235,15 @@ public class DataPB {
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, studentId);
             ResultSet rs = statement.executeQuery();
-
-            if (!rs.next()) {
-                System.err.println("Please select a schedule first.");
-            } else {
-                System.out.printf("%-20s%-20s%n", "Schedule Code", "Status");
-                do {
-                    System.out.printf("%-20s%-20s%n", rs.getString(1), rs.getString(2));
-                } while (rs.next());
+            if (rs.next()) {
+                status = rs.getString("status");
+                System.out.println(status);
             }
-            rs.close();
+
         }catch (Exception e) {
             throw e;
         }
+        return status;
     }
 
     public static boolean loginCoach(int coachNo, String password) {
@@ -332,21 +328,20 @@ public class DataPB {
         return studentId;
     }
 
-    public static ArrayList<TryoutSchedule> getTryOutSchedule(int sportsCode, int depId) throws SQLException {
+    public static ArrayList<TryoutSchedule> getTryOutSchedule(int studentId) throws SQLException {
         ArrayList<TryoutSchedule> schedules = new ArrayList<>();
 
         try {
-            String query = "SELECT tryout_schedule.scheduleCode, tryout_schedule.date, tryout_schedule.start_time, " +
-                    "tryout_schedule.end_time, tryout_schedule.location\n" +
-                    "FROM tryout_schedule\n" +
-                    "    INNER JOIN coach c\n" +
-                    "    USING (sportsCode)\n" +
-                    "    INNER JOIN coordinators c2\n" +
-                    "    ON c.coachNo = c2.idcoordinators\n" +
-                    "WHERE sportsCode=? AND deptID=?";
-            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            statement.setInt(1, sportsCode);
-            statement.setInt(2, depId);
+            String query = "SELECT ts.scheduleCode, ts.date, ts.start_time, ts.end_time, ts.location " +
+                    "FROM tryout_schedule ts\n" +
+                    "INNER JOIN tryout_sched_details t ON ts.scheduleCode = t.scheduleCode\n" +
+                    "INNER JOIN registration_list r ON t.registrationId = r.registrationId\n" +
+                    "WHERE r.studentId = ?";
+
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, studentId);
+
             ResultSet rs = statement.executeQuery();
 
             if (!rs.next()) {
@@ -361,6 +356,13 @@ public class DataPB {
 
                     TryoutSchedule schedule = new TryoutSchedule(scheduleCode, date, startTime, endTime, location);
                     schedules.add(schedule);
+
+                    System.out.println("Schedule Code: " + scheduleCode);
+                    System.out.println("Date: " + date);
+                    System.out.println("Start Time: " + startTime);
+                    System.out.println("End Time: " + endTime);
+                    System.out.println("Location: " + location);
+                    System.out.println();
                 } while (rs.next());
             }
 
@@ -371,8 +373,6 @@ public class DataPB {
 
         return schedules;
     }
-
-
 
 
     public static ArrayList<Sport> getAvailableSports() throws Exception{

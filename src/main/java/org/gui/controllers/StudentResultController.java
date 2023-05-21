@@ -23,7 +23,10 @@ public class StudentResultController implements Initializable {
     private TreeTableColumn<TryoutSchedule, String> dateTT;
 
     @FXML
-    private TreeTableColumn<TryoutSchedule, String> timeTT;
+    private TreeTableColumn<TryoutSchedule, String> startTimeTT;
+
+    @FXML
+    private TreeTableColumn<TryoutSchedule, String> endTimeTT;
 
     @FXML
     private TreeTableColumn<TryoutSchedule, String> locationTT;
@@ -38,7 +41,6 @@ public class StudentResultController implements Initializable {
     private Text statusText;
 
     public static int studentID;
-    public static String status;
 
     /**
      * Called to initialize a controller after its root element has been completely processed.
@@ -48,15 +50,18 @@ public class StudentResultController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        regID.setText(String.valueOf(studentID));
         try {
             int regId = DataPB.showRegistrationId(studentID);
+
+            regID.setText(String.valueOf(studentID));
             regID.setText(String.valueOf(regId));
-            int sportsCode = DataPB.getSportsCodeOfUser(studentID);
-            int deptId = DataPB.getDeptId(studentID);
+
+            String status = DataPB.showStatusOfStudent(studentID);
+            statusText.setText(status);
+//            int deptId = DataPB.getDeptId(studentID);
 
             // retrieve da tryout sched
-            ArrayList<TryoutSchedule> schedules = DataPB.getTryOutSchedule(sportsCode, deptId);
+            ArrayList<TryoutSchedule> schedules = DataPB.getTryOutSchedule(studentID);
 
             TreeItem<TryoutSchedule> rootItem = new TreeItem<>(new TryoutSchedule("null", null, null, null, ""));
             // populate da treee table
@@ -66,10 +71,9 @@ public class StudentResultController implements Initializable {
             }
             schedCodeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getScheduleCode()));
             dateTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getDate().toString()));
-            timeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getStartTime().toString()));
+            startTimeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getStartTime().toString()));
+            endTimeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getEndTime().toString()));
             locationTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getLocation()));
-
-
 
             treeTableView.setRoot(rootItem);
             treeTableView.setShowRoot(false);
@@ -77,8 +81,6 @@ public class StudentResultController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        statusText.setText(status);
     }
 
 }

@@ -101,7 +101,6 @@ public class StudentMainInterfaceController implements Initializable {
         homeButton.setStyle("-fx-background-color: #13202FFF");
         scheduleButton.setStyle("-fx-background-color: #13202FFF");
         StudentResultController.studentID = studId;
-        StudentResultController.status = "";
         System.out.println(StudentResultController.studentID + "idto");
         loadPage("/org/studentResult.fxml");
     }
