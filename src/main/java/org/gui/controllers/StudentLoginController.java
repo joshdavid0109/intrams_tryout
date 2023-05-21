@@ -76,10 +76,20 @@ public class StudentLoginController {
 
 
     public void logInNa(ActionEvent actionEvent) throws Exception {
+        Alert message = new Alert(Alert.AlertType.INFORMATION);
 
         String studentIdText = logInStudentId.getText();
-        if (studentIdText.isEmpty()) {
-            System.out.println("Student ID is required.");
+        String loginPassword = logInPassword.getText();
+
+        if (studentIdText.isEmpty() || loginPassword.isEmpty()) {
+            message.setContentText("Missing Credentials");
+            message.setTitle("Unsuccessful Login");
+            message.show();
+
+            System.out.println("Login Unsuccessful");
+            logInPasswordHide.setText("");
+            logInPassword.setText("");
+            logInStudentId.setText("");
             return;
         }
 
@@ -107,8 +117,14 @@ public class StudentLoginController {
             primaryStage.setScene(scene);
             primaryStage.show();
         } else {
-            System.out.println("Invalid Credentials");
+            message.setContentText("Invalid Student Id or Password");
+            message.setTitle("Unsuccessful Login");
+            message.show();
         }
+        System.out.println("Login Unsuccessful");
+        logInPasswordHide.setText("");
+        logInPassword.setText("");
+        logInStudentId.setText("");
     }
 
     private String getPassword() {

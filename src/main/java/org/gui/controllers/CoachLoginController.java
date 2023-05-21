@@ -9,10 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -38,28 +35,9 @@ public class CoachLoginController {
     @FXML
     public ImageView samcisLogo;
     @FXML
-    private Button loadRegisterGUIbtn;
-    @FXML
     private AnchorPane loginAnchorPane;
     @FXML
     private StackPane parentContainer;
-
-    @FXML
-    public void LoadRegisterInformationGUI() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/coachRegisterInterfacePersonalDetails.fxml")));
-        Scene scene = loadRegisterGUIbtn.getScene();
-
-        root.translateXProperty().set(scene.getWidth());
-        parentContainer.getChildren().add(root);
-
-        Timeline timeline = new Timeline();
-        KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), keyValue);
-
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.setOnFinished(event1 -> parentContainer.getChildren().remove(loginAnchorPane));
-        timeline.play();
-    }
 
     @FXML
     public void showPassword() {
@@ -74,10 +52,20 @@ public class CoachLoginController {
 
 
     public void logInNa(ActionEvent actionEvent) throws Exception {
+        Alert message = new Alert(Alert.AlertType.INFORMATION);
 
         String coachNoCheck = logInUsername.getText();
-        if (coachNoCheck.isEmpty()) {
-            System.out.println("Student ID is required.");
+        String loginPassword = logInPassword.getText();
+
+        if (coachNoCheck.isEmpty() || loginPassword.isEmpty()) {
+            message.setContentText("Missing Credentials");
+            message.setTitle("Unsuccessful Login");
+            message.show();
+
+            System.out.println("Login Unsuccessful");
+            logInPasswordHide.setText("");
+            logInPassword.setText("");
+            logInUsername.setText("");
             return;
         }
 
@@ -105,8 +93,15 @@ public class CoachLoginController {
             primaryStage.setScene(scene);
             primaryStage.show();
         } else {
-            System.out.println("Invalid Credentials");
+            message.setContentText("Invalid Coach No or Password");
+            message.setTitle("Unsuccessful Login");
+            message.show();
         }
+
+        System.out.println("Login Unsuccessful");
+        logInPasswordHide.setText("");
+        logInPassword.setText("");
+        logInUsername.setText("");
     }
 
     private String getPassword() {

@@ -55,16 +55,31 @@ public class AdminLoginController {
 
 
     public void logInNa(ActionEvent actionEvent) throws Exception {
+        Alert message = new Alert(Alert.AlertType.INFORMATION);
+
+        String adminUsername = logInUsername.getText();
+        String loginPassword = logInPassword.getText();
+
+        if (adminUsername.isEmpty() || loginPassword.isEmpty()) {
+            message.setContentText("Missing Credentials");
+            message.setTitle("Unsuccessful Login");
+            message.show();
+
+            System.out.println("Login Unsuccessful");
+            logInPasswordHide.setText("");
+            logInPassword.setText("");
+            logInUsername.setText("");
+            return;
+        }
+
         try {
             String userName = logInUsername.getText();
             String passWord = (logInPasswordHide.getText().equals("")
                     ? logInPassword.getText() : logInPasswordHide.getText());
 
-            Alert message = new Alert(Alert.AlertType.INFORMATION);
             if (userName.equals("user") && passWord.equals("admin")) {
                 logInButton.getScene().getWindow().hide();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/adminMainInterface.fxml"));
-
 
                 Parent root = fxmlLoader.load();
                 Scene scene = new Scene(root);
@@ -74,7 +89,7 @@ public class AdminLoginController {
 
 
             } else {
-                message.setContentText("Invalid Login Details.");
+                message.setContentText("Invalid User Name or Password");
                 message.setTitle("Unsuccessful Login");
                 message.show();
             }
