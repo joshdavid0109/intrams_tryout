@@ -70,6 +70,29 @@ public class DataPB {
             return false;
         }
     }
+    public static void addSport(String sportsName, String sportsDescription) throws Exception {
+        String query = "INSERT INTO sports (sportsCode, sportsName, sportsDescription) VALUES (?, ?, ?)";
+
+        PreparedStatement statement = connection.prepareStatement(query);
+
+        int sportsID = getAutoIncrementedID(connection);
+        
+        statement.setInt(1, sportsID);
+        statement.setString(2, sportsName);
+        statement.setString(3, sportsDescription);
+        statement.executeUpdate();
+        statement.close();
+    }
+
+    private static int getAutoIncrementedID(Connection connection) throws Exception {
+        String sql = "SELECT MAX(sportsCode) AS maxID FROM sports";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        ResultSet resultSet = statement.executeQuery();
+        int maxID = resultSet.next() ? resultSet.getInt("maxID") : 0;
+        resultSet.close();
+        statement.close();
+        return maxID + 1;
+    }
 
     public static void addStudent(RegisteredUser registeredUsers) {
         String query = "INSERT INTO registration_list VALUES(?,?,?,?,?)";

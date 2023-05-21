@@ -82,11 +82,11 @@ public class AdminAssignController implements Initializable {
     }
 
     public void cancelSport(ActionEvent event) {
-        System.out.println("cancel");
+        sportsChoiceBox.setValue(null);
+        coordinatorChoiceBox.setValue(null);
     }
 
     private void populateSportsList(){
-
         try {
             System.out.println(DataPB.getAvailableSports());
             ArrayList<Sport> sports = DataPB.getAvailableSports();
