@@ -17,6 +17,48 @@ public class DataPB {
         }
     }
 
+    public static int getSportsCode(int studID) {
+        int sportsCode = 0;
+        try {
+            String query = "SELECT appliedSport FROM registration_list WHERE studentId = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, studID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                sportsCode = resultSet.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sportsCode;
+    }
+
+    public static ArrayList<TryoutSchedule> studentGetTryoutSchedule(int studentID, int sportsCode) {
+        ArrayList<TryoutSchedule> schedules = new ArrayList<>();
+        try {
+            String query = "select scheduleCode, date, start_time, end_time, location from tryout_schedule ts inner join coach c on ts.coachNo = c.coachNo\n" +
+                    "inner join coordinators c2 on c.coachNo = c2.idcoordinators inner join students s on c2.deptID = s.deptID where studentID = ? and c.sportsCode = ?";
+            PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement.setInt(1, studentID);
+            statement.setInt(2, sportsCode);
+
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+
+                schedules.add(new TryoutSchedule(rs.getString(1), rs.getDate(2), rs.getTime(3),
+                        rs.getTime(4), rs.getString(5)));
+            }
+
+            rs.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return schedules;
+    }
+
     public static ArrayList<TryoutSchedule> coachGetTryoutSchedule(int coachId) {
         ArrayList<TryoutSchedule> schedules = new ArrayList<>();
         try {
@@ -443,6 +485,61 @@ public class DataPB {
 
     }
 
+    public static void updateSched(int regId, String schedCode) {
+        String query;
+        if (schedCode.equals("")) {
+            query = "UPDATE tryout_sched_details set scheduleCode=? where registrationId=?";
+            try {
+                PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                ps.setInt(1, regId);
+                ps.setString(2, schedCode);
+                ps.execute();
+                System.out.println("sched updated! ");
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }else {
+            query = "UPDATE tryout_sched_details set scheduleCode='' where registrationId=?";
+            try {
+                PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                ps.setInt(1, regId);
+                ps.execute();
+                System.out.println("sched updated! ");
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
+    }
+
+    public static void withDraw(int regId, String schedCode) {
+        String query;
+        if (schedCode.equals("")) {
+            query = "UPDATE tryout_sched_details set scheduleCode=? where registrationId=?";
+            try {
+                PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                ps.setInt(1, regId);
+                ps.setString(2, schedCode);
+                ps.execute();
+                System.out.println("sched updated! ");
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }else {
+            query = "UPDATE tryout_sched_details set scheduleCode='' where registrationId=?";
+            try {
+                PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                ps.setInt(1, regId);
+                ps.execute();
+                System.out.println("sched updated! ");
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+
+
+    }
+
     public static ArrayList<TryoutSchedule> getTryouts(int sportsCode, int deptId) throws SQLException {
         ArrayList<TryoutSchedule> tryoutSchedules = new ArrayList<>();
         try {
@@ -616,5 +713,22 @@ public class DataPB {
     }
 
 
+    public static int getRegID(int studID) {
 
+    String query = "select registrationId from registration_list where studentId=?";
+    try {
+        PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ps.setInt(1, studID);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            return rs.getInt(1);
+        }
+
+    } catch (SQLException e) {
+        System.err.println(e.getMessage());
+    }
+
+        return 0;
+    }
 }

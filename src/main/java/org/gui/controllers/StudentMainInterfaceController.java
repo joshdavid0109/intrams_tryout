@@ -121,6 +121,7 @@ public class StudentMainInterfaceController implements Initializable {
         scheduleText.setVisible(true);
         homeButton.setStyle("-fx-background-color: #13202FFF");
         resultButton.setStyle("-fx-background-color: #13202FFF");
+        StudentScheduleController.schedules = DataPB.studentGetTryoutSchedule(studId, DataPB.getSportsCode(studId));
         loadPage("/org/studentSchedule.fxml");
 
     }

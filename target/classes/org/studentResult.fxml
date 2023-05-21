@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.StudentMainInterfaceController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.StudentResultController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -18,12 +23,12 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="266.0" prefWidth="434.0">
                      <children>
-                        <TreeTableView prefHeight="472.0" prefWidth="438.0">
+                        <TreeTableView fx:id="treeTableView" prefHeight="472.0" prefWidth="438.0">
                           <columns>
-                            <TreeTableColumn editable="false" prefWidth="113.6000297665596" resizable="false" sortable="false" text="SHCEDULE CODE" />
-                            <TreeTableColumn editable="false" prefWidth="105.5999755859375" resizable="false" sortable="false" text="DATE" />
-                              <TreeTableColumn editable="false" prefWidth="104.80007934570312" resizable="false" sortable="false" text="TIME" />
-                              <TreeTableColumn editable="false" prefWidth="117.5999755859375" resizable="false" sortable="false" text="LOCATION" />
+                            <TreeTableColumn fx:id="schedCodeTT" editable="false" prefWidth="113.6000297665596" resizable="false" sortable="false" text="SHCEDULE CODE" />
+                            <TreeTableColumn fx:id="dateTT" editable="false" prefWidth="105.5999755859375" resizable="false" sortable="false" text="DATE" />
+                              <TreeTableColumn fx:id="timeTT" editable="false" prefWidth="104.80007934570312" resizable="false" sortable="false" text="TIME" />
+                              <TreeTableColumn fx:id="locationTT" editable="false" prefWidth="117.5999755859375" resizable="false" sortable="false" text="LOCATION" />
                           </columns>
                         </TreeTableView>
                      </children>
@@ -35,7 +40,7 @@
                   <Font name="System Bold" size="17.0" />
                </font>
             </Text>
-            <Text fx:id="registrationIdText" layoutX="191.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="276.1603546142578">
+            <Text fx:id="regID" layoutX="191.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="276.1603546142578">
                <font>
                   <Font size="17.0" />
                </font>
