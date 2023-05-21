@@ -162,7 +162,7 @@ public class CoachMainController implements Initializable {
         showButton.setStyle("-fx-background-color: #13202FFF");
         createButton.setStyle("-fx-background-color: #13202FFF");
 
-//        CoachShowListSchedController.scheduleList = DataPB.get
+        CoachShowListSchedController.scheduleList = DataPB.coachGetTryoutSchedule(coachNo);
         loadPage("/org/coachShowListSched.fxml");
     }
 

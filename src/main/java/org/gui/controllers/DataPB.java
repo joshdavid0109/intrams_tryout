@@ -20,34 +20,21 @@ public class DataPB {
     public static ArrayList<TryoutSchedule> coachGetTryoutSchedule(int coachId) {
         ArrayList<TryoutSchedule> schedules = new ArrayList<>();
         try {
-            String query = "select tryout_schedule.scheduleCode, tryout_schedule.date, tryout_schedule.start_time, " +
-                    "tryout_schedule.end_time, tryout_schedule.location\n" +
-                    "from tryout_schedule\n" +
-                    "    inner join coach c\n" +
-                    "    using (sportsCode)\n" +
-                    "    inner join coordinators c2\n" +
-                    "    on c.coachNo = c2.idcoordinators\n" +
-                    "where sportsCode=? AND deptID=?";
+            String query = "select scheduleCode, date, start_time, end_time, location from tryout_schedule where coachNo = ?";
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, coachId);
 
             ResultSet rs = statement.executeQuery();
 
-            if (!rs.next()) {
-                System.err.println("No available schedule yet for your department and applied sport.");
-            } else {
-                System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", "Schedule Code", "Date (YYYY-mm-dd)", "Start Time", "End Time",
-                        "Location");
-                System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", "-------------", "-----------------", "----------", "--------",
-                        "--------");
-                do {
-                    System.out.printf("%-20s%-20s%-20s%-20s%-20s%n", rs.getString(1), rs.getString(2), rs.getString(3),
-                            rs.getString(4), rs.getString(5));
-                } while (rs.next());
+            while (rs.next()) {
+
+                schedules.add(new TryoutSchedule(rs.getString(1), rs.getDate(2), rs.getTime(3),
+                        rs.getTime(4), rs.getString(5)));
             }
+
             rs.close();
         }catch (Exception e) {
-
+            e.printStackTrace();
         }
         return schedules;
     }

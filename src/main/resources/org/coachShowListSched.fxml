@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.CoachShowListSchedController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="485.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gui.controllers.CoachShowListSchedController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -19,17 +24,17 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Text>
-            <ScrollPane layoutX="19.0" layoutY="128.0" prefHeight="200.0" prefWidth="449.0">
+            <ScrollPane layoutX="19.0" layoutY="128.0" prefHeight="200.0" prefWidth="455.0">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="439.0" prefWidth="434.0">
                      <children>
                         <TreeTableView fx:id="treeTableView" prefHeight="439.0" prefWidth="436.0">
                           <columns>
-                            <TreeTableColumn fx:id="schedCodeTT" editable="false" prefWidth="108.7999809384346" resizable="false" text="SCHEDULE CODE" />
-                            <TreeTableColumn fx:id="dateTT" editable="false" prefWidth="60.800048828125" resizable="false" sortable="false" text="DATE" />
-                              <TreeTableColumn fx:id="startTimeTT" editable="false" prefWidth="93.60000610351562" resizable="false" sortable="false" text="START TIME" />
+                            <TreeTableColumn fx:id="schedCodeTT" editable="false" prefWidth="62.0" resizable="false" text="CODE" />
+                            <TreeTableColumn fx:id="dateTT" editable="false" prefWidth="88.0" resizable="false" sortable="false" text="DATE" />
+                              <TreeTableColumn fx:id="startTimeTT" editable="false" prefWidth="83.0" resizable="false" sortable="false" text="START TIME" />
                               <TreeTableColumn fx:id="endTimeTT" editable="false" prefWidth="72.0" resizable="false" sortable="false" text="END TIME" />
-                              <TreeTableColumn fx:id="locationTT" editable="false" prefWidth="98.39999389648438" resizable="false" sortable="false" text="LOCATION" />
+                              <TreeTableColumn fx:id="locationTT" editable="false" prefWidth="130.0" resizable="false" sortable="false" text="LOCATION" />
                           </columns>
                         </TreeTableView>
                      </children>

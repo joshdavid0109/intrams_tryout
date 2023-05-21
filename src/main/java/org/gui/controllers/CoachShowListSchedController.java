@@ -11,6 +11,7 @@ import org.gui.objects.TryoutSchedDetails;
 import org.gui.objects.TryoutSchedule;
 
 import java.net.URL;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -18,17 +19,22 @@ public class CoachShowListSchedController implements Initializable {
 
 
     @FXML
-    private TreeTableColumn<TryoutSchedDetails, Integer> registrationIdColumn;
-
-
-    @FXML
-    private TreeTableColumn<TryoutSchedDetails, String> scheduleCodeColumn;
+    private TreeTableColumn<TryoutSchedule, String> dateTT;
 
     @FXML
-    private TreeTableColumn<TryoutSchedDetails, String> statusColumn;
+    private TreeTableColumn<TryoutSchedule, String> endTimeTT;
 
     @FXML
-    private TreeTableView<TryoutSchedDetails> treeTableView;
+    private TreeTableColumn<TryoutSchedule, String> locationTT;
+
+    @FXML
+    private TreeTableColumn<TryoutSchedule, String> schedCodeTT;
+
+    @FXML
+    private TreeTableColumn<TryoutSchedule, String> startTimeTT;
+
+    @FXML
+    private TreeTableView<TryoutSchedule> treeTableView;
 
     public static List<TryoutSchedule> scheduleList;
 
@@ -44,25 +50,36 @@ public class CoachShowListSchedController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      /*  ObservableList<Coach> tableData = FXCollections.observableList(coaches);
-        TreeItem<Coach> parent = new TreeItem<>(new Coach("", " "));
+        ObservableList<TryoutSchedule> tableData = FXCollections.observableList(scheduleList);
+        TreeItem<TryoutSchedule> parent = new TreeItem<>(new TryoutSchedule("", null, null,null, ""));
 
-        for (Coach c :
-                coaches) {
-            TreeItem<Coach> c1 = new TreeItem<>(c);
+        for (TryoutSchedule S :
+                scheduleList) {
+            TreeItem<TryoutSchedule> c1 = new TreeItem<>(S);
             parent.getChildren().add(c1);
         }
 
 
-        coachTTColumn.setCellValueFactory(
-                (TreeTableColumn.CellDataFeatures<Coach,String> param) ->
-                        new SimpleStringProperty(param.getValue().getValue().getName()));
+        schedCodeTT.setCellValueFactory(
+                (TreeTableColumn.CellDataFeatures<TryoutSchedule,String> param) ->
+                        new SimpleStringProperty(param.getValue().getValue().getScheduleCode()));
 
-        sportsCodeTTColumn.setCellValueFactory(
-                (TreeTableColumn.CellDataFeatures<Coach,String> param) ->
-                        new SimpleStringProperty(param.getValue().getValue().getSport()));
+        dateTT.setCellValueFactory(
+                (TreeTableColumn.CellDataFeatures<TryoutSchedule,String> param) ->
+                        new SimpleStringProperty(param.getValue().getValue().getDate().toString()));
 
+        startTimeTT.setCellValueFactory(
+                (TreeTableColumn.CellDataFeatures<TryoutSchedule,String> param) ->
+                        new SimpleStringProperty(param.getValue().getValue().getStartTime().toString()));
+
+        endTimeTT.setCellValueFactory(
+                (TreeTableColumn.CellDataFeatures<TryoutSchedule,String> param) ->
+                        new SimpleStringProperty(param.getValue().getValue().getEndTime().toString()));
+
+        locationTT.setCellValueFactory(
+                (TreeTableColumn.CellDataFeatures<TryoutSchedule,String> param) ->
+                        new SimpleStringProperty(param.getValue().getValue().getLocation()));
         treeTableView.setRoot(parent);
-        treeTableView.setShowRoot(false);*/
+        treeTableView.setShowRoot(false);
     }
 }
