@@ -1,5 +1,6 @@
 package org.gui.controllers;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -47,11 +49,23 @@ public class StudentMainInterfaceController implements Initializable {
     private Text resultText;
 
     @FXML
+    private Text statusText;
+
+    @FXML
+    private Text registrationIdText;
+
+    @FXML
     private Text scheduleText;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    private int studId;
+
+    public void setStudId(int studId) {
+        this.studId = studId;
     }
 
     @FXML
@@ -89,6 +103,24 @@ public class StudentMainInterfaceController implements Initializable {
         homeButton.setStyle("-fx-background-color: #13202FFF");
         scheduleButton.setStyle("-fx-background-color: #13202FFF");
         loadPage("/org/studentResult.fxml");
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/studentMainInterface.fxml"));
+        try {
+            Parent root = fxmlLoader.load();
+
+            StudentMainInterfaceController mainInterfaceController = fxmlLoader.getController();
+            mainInterfaceController.setStudId(studId);
+
+            int registrationId = DataPB.showRegistrationId(studId);
+            System.out.println(registrationId + "di ako null huhu");
+            System.out.println("Stud id from first controller: " + studId);
+            registrationIdText.setText(Integer.toString(registrationId));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -107,11 +139,12 @@ public class StudentMainInterfaceController implements Initializable {
         homeButton.setStyle("-fx-background-color: #13202FFF");
         resultButton.setStyle("-fx-background-color: #13202FFF");
         loadPage("/org/studentSchedule.fxml");
+
+
     }
 
     private void loadPage(String page) {
         Parent root = null;
-
 
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(page)));
@@ -144,4 +177,9 @@ public class StudentMainInterfaceController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+
+
+
+
 }

@@ -37,6 +37,7 @@ public class StudentLoginController {
     private CheckBox showPassword;
     @FXML
     public Button logInButton;
+
     @FXML
     public ImageView samcisLogo;
     @FXML
@@ -45,6 +46,8 @@ public class StudentLoginController {
     private AnchorPane loginAnchorPane;
     @FXML
     private StackPane parentContainer;
+
+
 
     @FXML
     public void LoadRegisterInformationGUI() throws IOException {
@@ -92,10 +95,10 @@ public class StudentLoginController {
             return;
         }
 
-        int studentId = Integer.parseInt(studentIdText);
+        studId = Integer.parseInt(studentIdText);
         String password = getPassword();
 
-        boolean isLoggedIn = DataPB.loginStudent(studentId, password);
+        boolean isLoggedIn = DataPB.loginStudent(studId, password);
 
         if (isLoggedIn) {
             System.out.println("Welcome Student");
@@ -115,11 +118,16 @@ public class StudentLoginController {
             primaryStage.setResizable(false);
             primaryStage.setScene(scene);
             primaryStage.show();
+
+            StudentMainInterfaceController mainInterfaceController = fxmlLoader.getController();
+            mainInterfaceController.setStudId(studId);
+            System.out.println(studId + " FROM LOGIN");
         } else {
             message.setContentText("Invalid Student Id or Password");
             message.setTitle("Unsuccessful Login");
             message.show();
         }
+
         System.out.println("Login Unsuccessful");
         logInPasswordHide.setText("");
         logInPassword.setText("");
@@ -133,6 +141,9 @@ public class StudentLoginController {
             return logInPasswordHide.getText();
         }
     }
+
+    private int studId;
+
 
 }
 
