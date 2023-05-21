@@ -514,22 +514,29 @@ public class DataPB {
 
     public static void updateSched(int regId, String schedCode) {
         String query;
+
+        System.out.println(schedCode + "Sc");
         if (schedCode.equals("")) {
-            query = "UPDATE tryout_sched_details set scheduleCode=? where registrationId=?";
+            System.out.println("up");
+            query = "UPDATE tryout_sched_details set scheduleCode='' where registrationId=?";
             try {
                 PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 ps.setInt(1, regId);
-                ps.setString(2, schedCode);
                 ps.execute();
                 System.out.println("sched updated! ");
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         }else {
-            query = "UPDATE tryout_sched_details set scheduleCode='' where registrationId=?";
+            System.out.println("sad");
+            query = "UPDATE tryout_sched_details set scheduleCode=? where registrationId=?";
+
+            System.out.println(regId +  schedCode);
             try {
                 PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                ps.setInt(1, regId);
+                ps.setString(1, schedCode);
+                ps.setInt(2, regId);
+
                 ps.execute();
                 System.out.println("sched updated! ");
             } catch (SQLException e) {

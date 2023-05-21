@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -14,251 +14,37 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
+            <Button fx:id="acceptBtn" layoutX="364.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: DARKGREEN;" text="APPLY" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
             <Pane layoutX="30.0" layoutY="76.0" opacity="0.12" prefHeight="249.0" prefWidth="425.0" style="-fx-background-color: GREY;" />
-            <Button layoutX="251.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" text="CANCEL">
+            <Button fx:id="withdrawBtn" layoutX="135.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: DARKRED;" text="WITHDRAW" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button layoutX="364.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: DARKGREEN;" text="APPLY" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button layoutX="135.0" layoutY="346.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="91.0" style="-fx-background-color: DARKRED;" text="WITHDRAW" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <DatePicker layoutX="277.0" layoutY="32.0" />
-            <Pane layoutX="30.0" layoutY="76.0" prefHeight="250.0" prefWidth="425.0" style="-fx-background-color: TRANSPARENT;">
-               <children>
-                  <GridPane layoutY="-2.0" prefHeight="250.0" prefWidth="425.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+            <ScrollPane layoutX="29.0" layoutY="74.0" prefHeight="264.0" prefWidth="428.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="439.0" prefWidth="434.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MON" textAlignment="CENTER" wrappingWidth="62.136714935302734">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TUE" textAlignment="CENTER" wrappingWidth="62.136714935302734" GridPane.columnIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WED" textAlignment="CENTER" wrappingWidth="62.136714935302734" GridPane.columnIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="THU" textAlignment="CENTER" wrappingWidth="62.136714935302734" GridPane.columnIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="FRI" textAlignment="CENTER" wrappingWidth="62.136714935302734" GridPane.columnIndex="4">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SAT" textAlignment="CENTER" wrappingWidth="62.136714935302734" GridPane.columnIndex="5">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SUN" textAlignment="CENTER" wrappingWidth="62.136714935302734" GridPane.columnIndex="6">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     1" wrappingWidth="62.136714935302734" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     2" wrappingWidth="62.136714935302734" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     3" wrappingWidth="62.136714935302734" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     4" wrappingWidth="62.136714935302734" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     5" wrappingWidth="62.136714935302734" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     6" wrappingWidth="62.136714935302734" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     7" wrappingWidth="62.136714935302734" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     8" wrappingWidth="62.136714935302734" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     9" wrappingWidth="62.136714935302734" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     10" wrappingWidth="62.136714935302734" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     11" wrappingWidth="62.136714935302734" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     12" wrappingWidth="62.136714935302734" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     13" wrappingWidth="62.136714935302734" GridPane.columnIndex="5" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     14" wrappingWidth="62.136714935302734" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     15" wrappingWidth="62.136714935302734" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     16" wrappingWidth="62.136714935302734" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     17" wrappingWidth="62.136714935302734" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     18" wrappingWidth="62.136714935302734" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     19" wrappingWidth="62.136714935302734" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     20" wrappingWidth="62.136714935302734" GridPane.columnIndex="5" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     21" wrappingWidth="62.136714935302734" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     22" wrappingWidth="62.136714935302734" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     23" wrappingWidth="62.136714935302734" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     24" wrappingWidth="62.136714935302734" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     25" wrappingWidth="62.136714935302734" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     26" wrappingWidth="62.136714935302734" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     27" wrappingWidth="62.136714935302734" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     28" wrappingWidth="62.136714935302734" GridPane.columnIndex="6" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     29" wrappingWidth="62.136714935302734" GridPane.rowIndex="5">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     30" wrappingWidth="62.136714935302734" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     31" wrappingWidth="62.136714935302734" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
+                        <TreeTableView fx:id="treeTableView" prefHeight="439.0" prefWidth="436.0">
+                           <columns>
+                              <TreeTableColumn fx:id="schedCodeTT" editable="false" prefWidth="62.0" resizable="false" text="CODE" />
+                              <TreeTableColumn fx:id="dateTT" editable="false" prefWidth="88.0" resizable="false" sortable="false" text="DATE" />
+                              <TreeTableColumn fx:id="startTimeTT" editable="false" prefWidth="83.0" resizable="false" sortable="false" text="START TIME" />
+                              <TreeTableColumn fx:id="endTimeTT" editable="false" prefWidth="72.0" resizable="false" sortable="false" text="END TIME" />
+                              <TreeTableColumn fx:id="locationTT" editable="false" prefWidth="130.0" resizable="false" sortable="false" text="LOCATION" />
+                           </columns>
+                        </TreeTableView>
                      </children>
-                  </GridPane>
-               </children>
-            </Pane>
-            <Text layoutX="30.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MONTH" wrappingWidth="117.291015625">
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+            <Text fill="#ffa514" layoutX="68.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIST OF SCHEDULES" textAlignment="CENTER" wrappingWidth="349.41180419921875">
                <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Text>
-            <Text layoutX="186.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="YEAR" wrappingWidth="79.40724182128906">
-               <font>
-                  <Font name="System Bold" size="19.0" />
-               </font>
-            </Text>
-            <Text layoutX="147.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="|">
-               <font>
-                  <Font name="System Bold" size="19.0" />
+                  <Font name="System Bold" size="30.0" />
                </font>
             </Text>
          </children>

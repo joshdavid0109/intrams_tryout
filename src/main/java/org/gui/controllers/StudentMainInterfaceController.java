@@ -107,7 +107,7 @@ public class StudentMainInterfaceController implements Initializable {
     }
 
     @FXML
-    public void onPageTwo(javafx.scene.input.MouseEvent mouseEvent) {
+    public void onPageTwo(javafx.scene.input.MouseEvent mouseEvent) throws SQLException {
         if (scheduleButton.isPressed()) {
             scheduleButton.setStyle("-fx-background-color: #FFFFFF");
         } else {
@@ -122,6 +122,7 @@ public class StudentMainInterfaceController implements Initializable {
         homeButton.setStyle("-fx-background-color: #13202FFF");
         resultButton.setStyle("-fx-background-color: #13202FFF");
         StudentScheduleController.schedules = DataPB.studentGetTryoutSchedule(studId, DataPB.getSportsCode(studId));
+        StudentScheduleController.studID = studId;
         loadPage("/org/studentSchedule.fxml");
 
     }

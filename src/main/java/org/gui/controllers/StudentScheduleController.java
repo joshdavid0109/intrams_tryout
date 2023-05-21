@@ -92,7 +92,6 @@ public class StudentScheduleController implements Initializable {
 
             treeTableView.setRoot(parent);
             treeTableView.setShowRoot(false);
-/*
                 // Retrieve the selection model
                 TreeTableView.TreeTableViewSelectionModel<TryoutSchedule> selectionModel = treeTableView.getSelectionModel();
 
@@ -104,7 +103,6 @@ public class StudentScheduleController implements Initializable {
                         acceptBtn.setOnMouseClicked(event -> {
                             DataPB.updateSched(DataPB.getRegID(studID), selectedSchedDetails.getScheduleCode());
                         });
-
 
                     }
                 });
@@ -122,7 +120,7 @@ public class StudentScheduleController implements Initializable {
                         });
 
                     }
-                });*/
+                });
         }
     }
 }
