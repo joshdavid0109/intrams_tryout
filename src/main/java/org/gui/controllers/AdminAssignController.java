@@ -96,6 +96,7 @@ public class AdminAssignController implements Initializable {
             e.printStackTrace();
         }
     }
+
     private void populateCoordinatorsList() {
         try {
             System.out.println(DataPB.getAllCoordinators());

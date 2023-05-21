@@ -1,6 +1,7 @@
 package org.gui.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
@@ -12,10 +13,15 @@ import java.util.ResourceBundle;
 
 public class AdminCreateSportsController implements Initializable {
 
+    @FXML
     public TextField sportsNameTxtField;
+    @FXML
     public RadioButton maleRadioBTN;
+    @FXML
     public RadioButton femaleRadioBTN;
+    @FXML
     public RadioButton selectedRadioButton;
+    @FXML
     private ToggleGroup toggleGroup;
 
     @Override
@@ -25,6 +31,7 @@ public class AdminCreateSportsController implements Initializable {
         femaleRadioBTN.setToggleGroup(toggleGroup);
     }
 
+    @FXML
     public void saveSport(ActionEvent event) {
         try{
             String sport = sportsNameTxtField.getText();
@@ -37,7 +44,7 @@ public class AdminCreateSportsController implements Initializable {
             alert.setContentText(selectedRadioButton.getText()+"' " +sport+" has been added!");
             alert.showAndWait();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("ERROR!");
@@ -47,10 +54,9 @@ public class AdminCreateSportsController implements Initializable {
         }
     }
 
+    @FXML
     public void cancelSport(ActionEvent event) {
         sportsNameTxtField.setText("");
         toggleGroup.selectToggle(null);
     }
-
-
 }

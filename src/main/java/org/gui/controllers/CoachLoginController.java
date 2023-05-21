@@ -51,7 +51,7 @@ public class CoachLoginController {
         }
     }
 
-
+    @FXML
     public void logInNa(ActionEvent actionEvent) throws Exception {
         Alert message = new Alert(Alert.AlertType.INFORMATION);
 
