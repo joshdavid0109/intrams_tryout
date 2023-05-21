@@ -50,6 +50,8 @@ public class StudentResultController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         regID.setText(String.valueOf(studentID));
         try {
+            int regId = DataPB.showRegistrationId(studentID);
+            regID.setText(String.valueOf(regId));
             int sportsCode = DataPB.getSportsCodeOfUser(studentID);
             int deptId = DataPB.getDeptId(studentID);
 
@@ -57,17 +59,17 @@ public class StudentResultController implements Initializable {
             ArrayList<TryoutSchedule> schedules = DataPB.getTryOutSchedule(sportsCode, deptId);
 
             TreeItem<TryoutSchedule> rootItem = new TreeItem<>(new TryoutSchedule("null", null, null, null, ""));
-
-            schedCodeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getScheduleCode()));
-            dateTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getDate().toString()));
-            timeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getStartTime().toString()));
-            locationTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getLocation()));
-
             // populate da treee table
             for (TryoutSchedule schedule : schedules) {
                 TreeItem<TryoutSchedule> scheduleItem = new TreeItem<>(schedule);
                 rootItem.getChildren().add(scheduleItem);
             }
+            schedCodeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getScheduleCode()));
+            dateTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getDate().toString()));
+            timeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getStartTime().toString()));
+            locationTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getLocation()));
+
+
 
             treeTableView.setRoot(rootItem);
             treeTableView.setShowRoot(false);
