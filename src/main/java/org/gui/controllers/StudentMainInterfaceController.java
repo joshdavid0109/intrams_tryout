@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 
 public class StudentMainInterfaceController implements Initializable {
 
+    public Text regID;
     @FXML
     private BorderPane borderPane;
 
@@ -52,21 +53,18 @@ public class StudentMainInterfaceController implements Initializable {
     private Text statusText;
 
     @FXML
-    private Text registrationIdText;
-
-    @FXML
     private Text scheduleText;
+
+    public static int studId;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
-    private int studId;
 
-    public void setStudId(int studId) {
-        this.studId = studId;
-    }
+
 
     @FXML
     public void homePage(javafx.scene.input.MouseEvent mouseEvent) {
@@ -102,25 +100,10 @@ public class StudentMainInterfaceController implements Initializable {
         scheduleText.setVisible(false);
         homeButton.setStyle("-fx-background-color: #13202FFF");
         scheduleButton.setStyle("-fx-background-color: #13202FFF");
+        StudentResultController.studentID = studId;
+        StudentResultController.status = "";
+        System.out.println(StudentResultController.studentID + "idto");
         loadPage("/org/studentResult.fxml");
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/studentMainInterface.fxml"));
-        try {
-            Parent root = fxmlLoader.load();
-
-            StudentMainInterfaceController mainInterfaceController = fxmlLoader.getController();
-            mainInterfaceController.setStudId(studId);
-
-            int registrationId = DataPB.showRegistrationId(studId);
-            System.out.println(registrationId + "di ako null huhu");
-            System.out.println("Stud id from first controller: " + studId);
-            registrationIdText.setText(Integer.toString(registrationId));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @FXML
@@ -139,7 +122,6 @@ public class StudentMainInterfaceController implements Initializable {
         homeButton.setStyle("-fx-background-color: #13202FFF");
         resultButton.setStyle("-fx-background-color: #13202FFF");
         loadPage("/org/studentSchedule.fxml");
-
 
     }
 

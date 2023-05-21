@@ -101,6 +101,7 @@ public class StudentLoginController {
         boolean isLoggedIn = DataPB.loginStudent(studId, password);
 
         if (isLoggedIn) {
+            StudentMainInterfaceController.studId = studId;
             System.out.println("Welcome Student");
 
             Stage loginStage = (Stage) logInButton.getScene().getWindow();
@@ -120,8 +121,6 @@ public class StudentLoginController {
             primaryStage.show();
 
             StudentMainInterfaceController mainInterfaceController = fxmlLoader.getController();
-            mainInterfaceController.setStudId(studId);
-            System.out.println(studId + " FROM LOGIN");
         } else {
             message.setContentText("Invalid Student Id or Password");
             message.setTitle("Unsuccessful Login");
