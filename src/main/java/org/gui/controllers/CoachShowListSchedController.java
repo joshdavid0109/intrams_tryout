@@ -51,14 +51,14 @@ public class CoachShowListSchedController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<TryoutSchedule> tableData = FXCollections.observableList(scheduleList);
-        TreeItem<TryoutSchedule> parent = new TreeItem<>(new TryoutSchedule("", null, null,null, ""));
+        TreeItem<TryoutSchedule> parent = new TreeItem<>(new TryoutSchedule("",
+                null, null,null, ""));
 
         for (TryoutSchedule S :
                 scheduleList) {
             TreeItem<TryoutSchedule> c1 = new TreeItem<>(S);
             parent.getChildren().add(c1);
         }
-
 
         schedCodeTT.setCellValueFactory(
                 (TreeTableColumn.CellDataFeatures<TryoutSchedule,String> param) ->

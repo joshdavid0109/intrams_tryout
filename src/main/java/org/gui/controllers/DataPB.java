@@ -1,5 +1,7 @@
 package org.gui.controllers;
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.TreeItem;
 import org.gui.objects.*;
 import org.gui.objects.Student;
 
@@ -270,8 +272,23 @@ public class DataPB {
 
         return deptId;
     }
+    public static int getSportsCodeOfUser(int studentId) throws SQLException {
+        try {
+            String query = "SELECT appliedSport FROM registration_list WHERE studentId = ?";
 
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, studentId);
+            ResultSet rs = statement.executeQuery();
 
+            if (rs.next()) {
+                String sportsCode = rs.getString("appliedSport");
+                System.out.println("Sports Code: " + sportsCode + "of " + studentId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return studentId;
+    }
 
     public static void getTryOutSchedule(int sportsCode, int depId) throws SQLException {
         try {
