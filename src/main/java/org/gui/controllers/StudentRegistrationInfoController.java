@@ -38,7 +38,7 @@ public class StudentRegistrationInfoController {
     @FXML
     private Button nextButton, loadGuiButton;
 
-    private static int sportsCode;
+
 
     @FXML
     public void loadLoginGUI() throws IOException {
@@ -59,33 +59,11 @@ public class StudentRegistrationInfoController {
 
     @FXML
     public void loadRegisterGUI() throws IOException {
-        String selectedSport = sportBox.getValue(); // Get the selected option from the ComboBox
 
-
-        if (selectedSport == null || selectedSport.isEmpty()) {
-            showAlert("Error", "Please select a sport!");
-            return;
-        }
-
-        switch (selectedSport) {
-            case "Basketball":
-                sportsCode = 1;
-                break;
-            case "Hockey":
-                sportsCode = 2;
-                break;
-            case "Association Football":
-                sportsCode = 3;
-                break;
-            default:
-                sportsCode = 0;
-                break;
-        }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/registerInterface.fxml"));
         Parent root = loader.load();
         StudentRegistrationController controller2 = loader.getController();
-        controller2.setSelectedSportCode(sportsCode);
 
         Scene scene = nextButton.getScene();
         root.translateXProperty().set(scene.getWidth());
@@ -118,9 +96,5 @@ public class StudentRegistrationInfoController {
 
     }
 
-    public void clicky(MouseEvent mouseEvent) {
-        ObservableList<String> list = FXCollections.observableArrayList("Basketball", "Hockey", "Association Football");
-        sportBox.getItems().setAll(list);
-        sportBox.getSelectionModel().selectFirst();
-    }
+
 }

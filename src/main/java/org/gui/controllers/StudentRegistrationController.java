@@ -4,12 +4,15 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
@@ -46,14 +49,16 @@ public class StudentRegistrationController {
     private CheckBox regVerifyShowPassword;
     @FXML
     private TextField regPassword;
+
     @FXML
-    private TextField regVerifyPassword;
+    private TextField contactNumberField;
     @FXML
     private TextField regStudentId;
 
+    @FXML
+    private ComboBox<String> sportComboBox;
+
     private int sportsCode;
-
-
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -95,18 +100,37 @@ public class StudentRegistrationController {
 
     public void registerNa(ActionEvent e) throws Exception {
 
-        ArrayList<Sport> sports = DataPB.getAvailableSports();
-        ArrayList<Department> departments = DataPB.getDepartments();
+      /*  ArrayList<Sport> sports = DataPB.getAvailableSports();
+        ArrayList<Department> departments = DataPB.getDepartments();*/
         ArrayList<RegisteredUser> registeredUsers = DataPB.getRegisteredStudents();
         System.out.println(sportsCode);
 
         String studIdText = regStudentId.getText();
         String password = regPassword.getText();
-        String verifyPassword = regVerifyPassword.getText();
+        String contactNo = contactNumberField.getText();
+        String selectedSport = sportComboBox.getValue(); // Get the selected option from the ComboBox
 
-        if (password != verifyPassword) {
-            showAlert("Error", "Password does not match.");
+
+        if (selectedSport == null || selectedSport.isEmpty()) {
+            showAlert("Error", "Please select a sport!");
+            return;
         }
+
+        switch (selectedSport) {
+            case "Basketball":
+                sportsCode = 1;
+                break;
+            case "Hockey":
+                sportsCode = 2;
+                break;
+            case "Association Football":
+                sportsCode = 3;
+                break;
+            default:
+                sportsCode = 0;
+                break;
+        }
+
 
         if (studIdText.isEmpty() || password.isEmpty()) {
             showAlert("Error", "Student ID and password cannot be empty.");
@@ -119,6 +143,11 @@ public class StudentRegistrationController {
             studId = Integer.parseInt(studIdText);
         } catch (Exception x) {
             showAlert("Error", "Student ID must be a numeric value.");
+            return;
+        }
+
+        if(contactNo.isEmpty()) {
+            showAlert("Error", "Contact No. cannot be empty.");
             return;
         }
 
@@ -147,8 +176,11 @@ public class StudentRegistrationController {
 
 //        int deptId = DataPB.getDeptId(studId);
 
+        System.out.println("helu");
         DataPB.addStudent(new org.gui.objects.RegisteredUser(registeredUsers.size() + 1, studId, sportsCode,
-                "wala pa", password));
+                contactNo, password));
+
+        //TODO lipat na sa StudentMain.java
     }
 
     private void showAlert(String title, String message) {
@@ -172,19 +204,9 @@ public class StudentRegistrationController {
         }
     }
 
-    @FXML
-    public void regVerifyShowPassword() {
-        if(regVerifyShowPassword.isSelected()) {
-            regVerifyPassword.setText(regVerifyPasswordHide.getText());
-            regVerifyPassword.setVisible(true);
-            regVerifyPasswordHide.setVisible(false);
-        } else {
-            regVerifyPasswordHide.setText(regVerifyPassword.getText());
-            regVerifyPasswordHide.setVisible(true);
-            regVerifyPassword.setVisible(false);
-        }
-    }
-    public void setSelectedSportCode(int sportsCode) {
-        this.sportsCode = sportsCode;
+    public void clicky(MouseEvent mouseEvent) {
+        ObservableList<String> list = FXCollections.observableArrayList("Basketball", "Hockey", "Association Football");
+        sportComboBox.getItems().setAll(list);
+        sportComboBox.getSelectionModel().selectFirst();
     }
 }

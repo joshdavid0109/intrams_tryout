@@ -11,7 +11,7 @@ public class DataPB {
 
     static {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/cbts?user=root&password");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/im?user=root&password");
         } catch (Exception e) {
             e.printStackTrace();
         }
