@@ -160,6 +160,8 @@ public class StudentRegistrationController implements Initializable {
         DataPB.addStudent(new org.gui.objects.RegisteredUser(registeredUsers.size() + 1, studId, sportsCode,
                 contactNo, password));
 
+        DataPB.addToTryOutSchedDetails(registeredUsers.size(), null, "PENDING");
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/studentMainInterface.fxml"));
         Parent root = loader.load();

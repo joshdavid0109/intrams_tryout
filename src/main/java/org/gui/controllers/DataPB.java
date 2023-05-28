@@ -176,11 +176,33 @@ public class DataPB {
             ps.setString(4,registeredUsers.getContactNumber());
             ps.setString(5, registeredUsers.getPassword());
             ps.execute();
-
             System.out.println("Registration Success!\n");
+
+
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public static void addToTryOutSchedDetails(int regId, String schedCode, String pending) {
+        String query = "INSERT INTO tryout_sched_details VALUES(?,?,?)";
+        String selectQ= "SELECT * FROM registration_list";
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(selectQ);
+            rs.next();
+            PreparedStatement ps = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            ps.setInt(1, regId);
+            ps.setString(2, schedCode);
+            ps.setString(3, pending);
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
     }
 
     public static void addStudentToDB(Student student) throws SQLException {
