@@ -99,6 +99,7 @@ public class StudentRegistrationController implements Initializable {
         String contactNo = contactNumberField.getText();
 
         Sport selectedSport = sportChoiceBox.getValue(); // Get the selected option from the choice box
+        String stringSelectedSport = sportChoiceBox.getValue().getSportsName();
 
 
         if (selectedSport == null) {
@@ -145,10 +146,10 @@ public class StudentRegistrationController implements Initializable {
             return;
         }
 
-        boolean checkIfRegistered = DataPB.checkExistingStudentIdSaRegistrationsHAHAHA(studId);
+        boolean checkIfRegistered = DataPB.checkExistingStudentIdAndAppliedSport(studId, selectedSport.getSportsCode());
 
         if (checkIfRegistered) {
-            showAlert("Error", "Student with the provided ID number is already registered :(");
+            showAlert("Error", "Provided ID number with the sport [" + stringSelectedSport + "] is already registered!");
             return;
         }
 

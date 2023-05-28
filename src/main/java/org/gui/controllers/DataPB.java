@@ -120,10 +120,11 @@ public class DataPB {
         }
     }
 
-    public static boolean checkExistingStudentIdSaRegistrationsHAHAHA(int studentId) {
-        try { String query = "select studentId FROM registration_list WHERE studentId = ?";
+    public static boolean checkExistingStudentIdAndAppliedSport(int studentId, int appliedSport) {
+        try { String query = "select studentId FROM registration_list WHERE studentId = ? AND appliedSport = ?";
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             statement.setInt(1, studentId);
+            statement.setInt(2,appliedSport);
             ResultSet rs = statement.executeQuery();
 
             boolean exists = rs.next();
