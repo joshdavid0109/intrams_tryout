@@ -20,6 +20,9 @@ public class StudentResultController implements Initializable {
     private TreeTableColumn<TryoutSchedule, String> schedCodeTT;
 
     @FXML
+    private TreeTableColumn<TryoutSchedule, String> sportTT;
+
+    @FXML
     private TreeTableColumn<TryoutSchedule, String> dateTT;
 
     @FXML
@@ -67,6 +70,11 @@ public class StudentResultController implements Initializable {
                 rootItem.getChildren().add(scheduleItem);
             }
             schedCodeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getScheduleCode()));
+            sportTT.setCellValueFactory(param -> {
+                int sportsCode = param.getValue().getValue().getSportsCode();
+                String sportsName = DataPB.getStringSportsCode(sportsCode);
+                return new ReadOnlyStringWrapper(sportsName);
+            });
             dateTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getDate().toString()));
             startTimeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getStartTime().toString()));
             endTimeTT.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue().getEndTime().toString()));
@@ -82,7 +90,6 @@ public class StudentResultController implements Initializable {
                     TryoutSchedule selectedSchedule = newValue.getValue();
 
                     System.out.println("pindot");
-
 
                     int registrationId;
                     String status2;

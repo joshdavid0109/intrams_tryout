@@ -26,8 +26,18 @@ public class TryoutSchedule implements Serializable {
         this.totalStudents = totalStudents;
     }
 
+    public TryoutSchedule(String scheduleCode, int sportsCode, Date date, Time startTime, Time endTime, String location) {
+        this.scheduleCode = scheduleCode;
+        this.sportsCode = sportsCode;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+    }
+
     public TryoutSchedule(String scheduleCode, Date date, Time startTime, Time endTime, String location) {
         this.scheduleCode = scheduleCode;
+
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;

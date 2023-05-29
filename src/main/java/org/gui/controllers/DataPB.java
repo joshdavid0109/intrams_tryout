@@ -155,6 +155,25 @@ public class DataPB {
             return false;
         }
     }
+
+    public static String getStringSportsCode(int sportsCode) {
+        String sportsName = null;
+        try {
+            String query = "SELECT sportsName FROM sports WHERE sportsCode = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, sportsCode);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                sportsName = rs.getString("sportsName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return sportsName;
+    }
+
     public static void addSport(String sportsName, String sportsDescription) throws Exception {
         String query = "INSERT INTO sports (sportsCode, sportsName, sportsDescription) VALUES (?, ?, ?)";
 
@@ -375,7 +394,7 @@ public class DataPB {
         ArrayList<TryoutSchedule> schedules = new ArrayList<>();
 
         try {
-            String query = "SELECT ts.scheduleCode, ts.date, ts.start_time, ts.end_time, ts.location " +
+            String query = "SELECT ts.scheduleCode, ts.sportsCode, ts.date, ts.start_time, ts.end_time, ts.location " +
                     "FROM tryout_schedule ts\n" +
                     "INNER JOIN tryout_sched_details t ON ts.scheduleCode = t.scheduleCode\n" +
                     "INNER JOIN registration_list r ON t.registrationId = r.registrationId\n" +
@@ -392,12 +411,13 @@ public class DataPB {
             } else {
                 do {
                     String scheduleCode = rs.getString("scheduleCode");
+                    int sportsCode = rs.getInt("sportsCode");
                     Date date = rs.getDate("date");
                     Time startTime = rs.getTime("start_time");
                     Time endTime = rs.getTime("end_time");
                     String location = rs.getString("location");
 
-                    TryoutSchedule schedule = new TryoutSchedule(scheduleCode, date, startTime, endTime, location);
+                    TryoutSchedule schedule = new TryoutSchedule(scheduleCode,sportsCode, date, startTime, endTime, location);
                     schedules.add(schedule);
 
                     System.out.println("Schedule Code: " + scheduleCode);
