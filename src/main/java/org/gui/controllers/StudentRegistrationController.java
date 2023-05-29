@@ -88,61 +88,35 @@ public class StudentRegistrationController implements Initializable {
     }
 
     public void registerNa(ActionEvent e) throws Exception {
-
-      /*  ArrayList<Sport> sports = DataPB.getAvailableSports();
-        ArrayList<Department> departments = DataPB.getDepartments();*/
         ArrayList<RegisteredUser> registeredUsers = DataPB.getRegisteredStudents();
-        System.out.println(sportsCode);
 
         String studIdText = regStudentId.getText();
         String password = regPassword.getText();
         String contactNo = contactNumberField.getText();
 
-        Sport selectedSport = sportChoiceBox.getValue(); // Get the selected option from the choice box
-        String stringSelectedSport = sportChoiceBox.getValue().getSportsName();
-
+        Sport selectedSport = sportChoiceBox.getValue();
+        String stringSelectedSport = selectedSport.getSportsName();
 
         if (selectedSport == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ERROR");
-            alert.setHeaderText(null);
-            alert.setContentText("SELECT VALUES");
-            alert.showAndWait();
-        }
-
-
-        if (studIdText.isEmpty() || password.isEmpty()) {
-            showAlert("Error", "Student ID and password cannot be empty.");
+            showAlert("Error", "SELECT VALUES");
             return;
         }
 
         int studId;
-
         try {
             studId = Integer.parseInt(studIdText);
-        } catch (Exception x) {
+        } catch (NumberFormatException x) {
             showAlert("Error", "Student ID must be a numeric value.");
             return;
         }
 
-        if(contactNo.isEmpty()) {
+        if (contactNo.isEmpty()) {
             showAlert("Error", "Contact No. cannot be empty.");
             return;
         }
 
         if (studId < 100000 || studId > 999999) {
             showAlert("Error", "Student ID must have 6 digits.");
-            return;
-        }
-
-        boolean checkExist = DataPB.checkExistingStudentId(studId);
-
-        if (password.length() < 8) {
-            showAlert("Error", "Password must have at least 8 characters.");
-        }
-
-        if (!checkExist) {
-            showAlert("Error", "Student with the provided ID number does not exist.");
             return;
         }
 
@@ -153,13 +127,9 @@ public class StudentRegistrationController implements Initializable {
             return;
         }
 
-//        int deptId = DataPB.getDeptId(studId);
+        sportsCode = selectedSport.getSportsCode();
 
-        sportsCode = Objects.requireNonNull(selectedSport).getSportsCode();
-
-        System.out.println("helu");
-        DataPB.addStudent(new org.gui.objects.RegisteredUser(registeredUsers.size() + 1, studId, sportsCode,
-                contactNo, password));
+        DataPB.addStudent(new RegisteredUser(registeredUsers.size() + 1, studId, sportsCode, contactNo, password));
 
         DataPB.addToTryOutSchedDetails(registeredUsers.size(), null, "PENDING");
 
@@ -172,6 +142,7 @@ public class StudentRegistrationController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -208,5 +179,34 @@ public class StudentRegistrationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateSportsList();
+
+        regStudentId.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.isEmpty()) {
+                int studId;
+                try {
+                    studId = Integer.parseInt(newValue);
+                } catch (NumberFormatException e) {
+                    showAlert("Error", "Student ID must be a numeric value.");
+                    return;
+                }
+
+                System.out.println("hi");
+                String passwordByStudentId = DataPB.getPasswordByStudentId(studId);
+
+                if (passwordByStudentId != null && regPassword.getText().isEmpty()) {
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Registration Confirmation");
+                    alert.setHeaderText(null);
+                    alert.setContentText("You have already registered before. Your password will be autofilled.");
+                    alert.showAndWait();
+
+
+                    regPassword.setText(passwordByStudentId);
+
+                    regPassword.setEditable(false);
+                }
+            }
+        });
     }
 }

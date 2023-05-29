@@ -104,6 +104,26 @@ public class DataPB {
         }
     }
 
+    public static String getPasswordByStudentId(int studentId) {
+        try {
+            String query = "SELECT password FROM registration_list WHERE studentId = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, studentId);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("password");
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
     public static boolean checkExistingStudentId(int studentId) {
         try { String query = "select studentId FROM students WHERE studentId = ?";
             PreparedStatement statement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
