@@ -101,7 +101,6 @@ public class StudentMainInterfaceController implements Initializable {
         homeButton.setStyle("-fx-background-color: #13202FFF");
         scheduleButton.setStyle("-fx-background-color: #13202FFF");
         StudentResultController.studentID = studId;
-        System.out.println(StudentResultController.studentID + "idto");
         loadPage("/org/studentResult.fxml");
     }
 
@@ -120,6 +119,8 @@ public class StudentMainInterfaceController implements Initializable {
         scheduleText.setVisible(true);
         homeButton.setStyle("-fx-background-color: #13202FFF");
         resultButton.setStyle("-fx-background-color: #13202FFF");
+
+        System.out.println(DataPB.getSportsCode(studId));
         StudentScheduleController.schedules = DataPB.studentGetTryoutSchedule(studId, DataPB.getSportsCode(studId));
         StudentScheduleController.studID = studId;
         loadPage("/org/studentSchedule.fxml");
