@@ -52,19 +52,16 @@ public class StudentResultController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try {
             int regId = DataPB.showRegistrationId(studentID);
-
-            regID.setText(String.valueOf(studentID));
             regID.setText(String.valueOf(regId));
 
             String status = DataPB.showStatusOfStudent(studentID);
             statusText.setText(status);
-//            int deptId = DataPB.getDeptId(studentID);
 
-            // retrieve da tryout sched
+            // Retrieve the tryout schedules
             ArrayList<TryoutSchedule> schedules = DataPB.getTryOutSchedule(studentID);
 
             TreeItem<TryoutSchedule> rootItem = new TreeItem<>(new TryoutSchedule("null", null, null, null, ""));
-            // populate da treee table
+            // Populate the tree table
             for (TryoutSchedule schedule : schedules) {
                 TreeItem<TryoutSchedule> scheduleItem = new TreeItem<>(schedule);
                 rootItem.getChildren().add(scheduleItem);
@@ -78,9 +75,31 @@ public class StudentResultController implements Initializable {
             treeTableView.setRoot(rootItem);
             treeTableView.setShowRoot(false);
 
+            // Add selection listener
+            // Add selection listener
+            treeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    // Get the corresponding TryoutSchedule from the selected item
+                    TryoutSchedule selectedSchedule = newValue.getValue();
+
+                    System.out.println("pindot");
+
+                    // Get the corresponding registration ID and status based on the selected student ID
+                    int registrationId;
+                    String status2;
+                    try {
+                        registrationId = DataPB.showRegistrationId(studentID);
+                        status2 = DataPB.showStatusOfStudent(studentID);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    regID.setText(String.valueOf(registrationId));
+                    statusText.setText(status2);
+                }
+            });
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 }
