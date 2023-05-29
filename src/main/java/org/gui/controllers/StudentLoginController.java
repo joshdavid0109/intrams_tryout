@@ -83,8 +83,17 @@ public class StudentLoginController {
 
         String studentIdText = logInStudentId.getText();
 
+        try {
+            studId = Integer.parseInt(studentIdText);
+        }catch (NumberFormatException e) {
+            message.setContentText("Please provide a valid student ID number");
+            message.setTitle("Invalid ID number");
+            message.show();
+            return;
+        }
+
         if (studentIdText.isEmpty()) {
-            message.setContentText("Invalid Student Id or Password");
+            message.setContentText("Invalid Student ID or Password");
             message.setTitle("Unsuccessful Login");
             message.show();
 
@@ -95,7 +104,7 @@ public class StudentLoginController {
             return;
         }
 
-        studId = Integer.parseInt(studentIdText);
+
         String password = getPassword();
 
         boolean isLoggedIn = DataPB.loginStudent(studId, password);
@@ -122,12 +131,10 @@ public class StudentLoginController {
 
             StudentMainInterfaceController mainInterfaceController = fxmlLoader.getController();
         } else {
-            message.setContentText("Invalid Student Id or Password");
+            message.setContentText("Invalid Student ID or Password");
             message.setTitle("Unsuccessful Login");
             message.show();
         }
-
-        System.out.println("Login Unsuccessful");
         logInPasswordHide.setText("");
         logInPassword.setText("");
         logInStudentId.setText("");

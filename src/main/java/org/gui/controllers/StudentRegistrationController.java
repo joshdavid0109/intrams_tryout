@@ -202,6 +202,7 @@ public class StudentRegistrationController implements Initializable {
                     alert.showAndWait();
 
 
+
                     regPassword.setText(passwordByStudentId);
 
                     regPassword.setEditable(false);

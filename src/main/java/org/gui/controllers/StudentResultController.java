@@ -51,12 +51,6 @@ public class StudentResultController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            int regId = DataPB.showRegistrationId(studentID);
-            regID.setText(String.valueOf(regId));
-
-            String status = DataPB.showStatusOfStudent(studentID);
-            statusText.setText(status);
-
 
             ArrayList<TryoutSchedule> schedules = DataPB.getTryOutSchedule(studentID);
 
@@ -83,12 +77,12 @@ public class StudentResultController implements Initializable {
 
                     System.out.println("pindot");
 
-
                     int registrationId;
                     String status2;
                     try {
-                        registrationId = DataPB.showRegistrationId(studentID);
-                        status2 = DataPB.showStatusOfStudent(studentID);
+                        System.out.println("sc" +selectedSchedule.getSportsCode());
+                        registrationId = DataPB.getRegID(studentID, selectedSchedule.getSportsCode());
+                        status2 = DataPB.showStatusOfStudent(studentID, selectedSchedule.getSportsCode());
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }

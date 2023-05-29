@@ -1,5 +1,7 @@
 package org.gui.objects;
 
+import org.gui.controllers.DataPB;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
@@ -11,6 +13,7 @@ public class TryoutSchedule implements Serializable {
     private Date date;
     private Time startTime;
     private Time endTime;
+    private String sport;
     private String location;
     private int totalStudents;
 
@@ -26,12 +29,23 @@ public class TryoutSchedule implements Serializable {
         this.totalStudents = totalStudents;
     }
 
+    public TryoutSchedule(String scheduleCode,String sport, Date date, Time startTime, Time endTime, String location) {
+        this.scheduleCode = scheduleCode;
+        this.sport = sport;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.sportsCode = DataPB.getSportsCodeByName(sport);
+    }
+
     public TryoutSchedule(String scheduleCode, Date date, Time startTime, Time endTime, String location) {
         this.scheduleCode = scheduleCode;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
+        this.sportsCode = DataPB.getSportsCodeBySC(scheduleCode);
     }
 
     //
@@ -113,5 +127,13 @@ public class TryoutSchedule implements Serializable {
     public String toString() {
         return String.format("%-20d%-20d%-20s%-15s%-10s%-45s", sportsCode, deptTryoutCode,
                 date, startTime, endTime, location);
+    }
+
+    public String getSport() {
+        return sport;
+    }
+
+    public void setSport(String sport) {
+        this.sport = sport;
     }
 }

@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class StudentScheduleController implements Initializable {
 
+    public TreeTableColumn<TryoutSchedule, String> sportNameTT;
     @FXML
     private TreeTableColumn<TryoutSchedule, String> dateTT;
 
@@ -59,7 +60,7 @@ public class StudentScheduleController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
             ObservableList<TryoutSchedule> tableData = FXCollections.observableList(schedules);
-            TreeItem<TryoutSchedule> parent = new TreeItem<>(new TryoutSchedule("", null, null,null, ""));
+            TreeItem<TryoutSchedule> parent = new TreeItem<>(new TryoutSchedule("","", null, null,null, ""));
         System.out.println(schedules);
 
             if (schedules != null) {
@@ -72,6 +73,9 @@ public class StudentScheduleController implements Initializable {
             schedCodeTT.setCellValueFactory(
                     (TreeTableColumn.CellDataFeatures<TryoutSchedule,String> param) ->
                             new SimpleStringProperty(param.getValue().getValue().getScheduleCode()));
+
+            sportNameTT.setCellValueFactory((TreeTableColumn.CellDataFeatures<TryoutSchedule,String> param) ->
+                    new SimpleStringProperty(param.getValue().getValue().getSport()));
 
             dateTT.setCellValueFactory(
                     (TreeTableColumn.CellDataFeatures<TryoutSchedule,String> param) ->
@@ -101,7 +105,8 @@ public class StudentScheduleController implements Initializable {
                         TryoutSchedule selectedSchedDetails = newValue.getValue();
 
                         acceptBtn.setOnMouseClicked(event -> {
-                            DataPB.updateSched(DataPB.getRegID(studID), selectedSchedDetails.getScheduleCode());
+                            System.out.println(selectedSchedDetails.getSportsCode());
+                            DataPB.updateSched(DataPB.getRegID(studID, selectedSchedDetails.getSportsCode()), selectedSchedDetails.getScheduleCode());
                         });
 
                     }
@@ -116,7 +121,7 @@ public class StudentScheduleController implements Initializable {
                         TryoutSchedule selectedSchedDetails = newValue.getValue();
 
                         withdrawBtn.setOnMouseClicked(event -> {
-                            DataPB.updateSched(DataPB.getRegID(studID),"");
+                            DataPB.updateSched(DataPB.getRegID(studID, selectedSchedDetails.getSportsCode()),"");
                         });
 
                     }
