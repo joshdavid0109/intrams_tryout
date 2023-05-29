@@ -29,6 +29,15 @@ public class TryoutSchedule implements Serializable {
         this.totalStudents = totalStudents;
     }
 
+    public TryoutSchedule(String scheduleCode,int sportCode, Date date, Time startTime, Time endTime, String location) {
+        this.scheduleCode = scheduleCode;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.sportsCode = sportCode;
+    }
+
     public TryoutSchedule(String scheduleCode,String sport, Date date, Time startTime, Time endTime, String location) {
         this.scheduleCode = scheduleCode;
         this.sport = sport;
@@ -47,6 +56,8 @@ public class TryoutSchedule implements Serializable {
         this.location = location;
         this.sportsCode = DataPB.getSportsCodeBySC(scheduleCode);
     }
+
+
 
     //
     public TryoutSchedule(int sportsCode, int deptTryoutCode, Date date, Time startTime,
