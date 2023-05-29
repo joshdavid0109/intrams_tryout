@@ -57,11 +57,11 @@ public class StudentResultController implements Initializable {
             String status = DataPB.showStatusOfStudent(studentID);
             statusText.setText(status);
 
-            // Retrieve the tryout schedules
+
             ArrayList<TryoutSchedule> schedules = DataPB.getTryOutSchedule(studentID);
 
             TreeItem<TryoutSchedule> rootItem = new TreeItem<>(new TryoutSchedule("null", null, null, null, ""));
-            // Populate the tree table
+
             for (TryoutSchedule schedule : schedules) {
                 TreeItem<TryoutSchedule> scheduleItem = new TreeItem<>(schedule);
                 rootItem.getChildren().add(scheduleItem);
@@ -75,16 +75,15 @@ public class StudentResultController implements Initializable {
             treeTableView.setRoot(rootItem);
             treeTableView.setShowRoot(false);
 
-            // Add selection listener
-            // Add selection listener
+
             treeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
-                    // Get the corresponding TryoutSchedule from the selected item
+
                     TryoutSchedule selectedSchedule = newValue.getValue();
 
                     System.out.println("pindot");
 
-                    // Get the corresponding registration ID and status based on the selected student ID
+
                     int registrationId;
                     String status2;
                     try {
