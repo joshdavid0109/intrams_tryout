@@ -1,5 +1,5 @@
 # Intramurals Tryout System
-The SLU Intramurals Tryout Management System is a comprehensive web-based platform tailored to streamline the organization and execution of intramural sports tryouts at Saint Louis University (SLU). Developed specifically for the SLU community, this system simplifies the process of coordinating tryouts, registering participants, and managing evaluations.
+The SLU Intramurals Tryout Management System is a comprehensive software platform tailored to streamline the organization and execution of intramural sports tryouts at Saint Louis University (SLU). Developed specifically for the SLU community, this system simplifies the process of coordinating tryouts, registering participants, and managing evaluations.
 
 Key Features:
 
